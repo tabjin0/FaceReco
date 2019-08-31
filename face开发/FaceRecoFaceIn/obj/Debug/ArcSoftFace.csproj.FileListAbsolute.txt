@@ -1,0 +1,8 @@
+C:\Users\tabjin\Desktop\ArcfaceDemo_CSharp-master\ArcfaceDemo_CSharp-master\ArcSoftFace\ArcSoftFace\bin\Debug\ArcSoftFace.exe.config
+C:\Users\tabjin\Desktop\ArcfaceDemo_CSharp-master\ArcfaceDemo_CSharp-master\ArcSoftFace\ArcSoftFace\obj\Debug\Interop.WMPLib.dll
+C:\Users\tabjin\Desktop\ArcfaceDemo_CSharp-master\ArcfaceDemo_CSharp-master\ArcSoftFace\ArcSoftFace\obj\Debug\AxInterop.WMPLib.dll
+C:\Users\tabjin\Desktop\ArcfaceDemo_CSharp-master\ArcfaceDemo_CSharp-master\ArcSoftFace\ArcSoftFace\obj\Debug\ArcSoftFace.csproj.ResolveComReference.cache
+C:\Users\tabjin\Desktop\ArcfaceDemo_CSharp-master\ArcfaceDemo_CSharp-master\ArcSoftFace\ArcSoftFace\obj\Debug\ArcSoftFace.csprojResolveAssemblyReference.cache
+C:\Users\tabjin\Desktop\ArcfaceDemo_CSharp-master\ArcfaceDemo_CSharp-master\ArcSoftFace\ArcSoftFace\obj\Debug\ArcSoftFace.FaceForm.resources
+C:\Users\tabjin\Desktop\ArcfaceDemo_CSharp-master\ArcfaceDemo_CSharp-master\ArcSoftFace\ArcSoftFace\obj\Debug\ArcSoftFace.Properties.Resources.resources
+C:\Users\tabjin\Desktop\ArcfaceDemo_CSharp-master\ArcfaceDemo_CSharp-master\ArcSoftFace\ArcSoftFace\obj\Debug\ArcSoftFace.csproj.GenerateResource.Cache
