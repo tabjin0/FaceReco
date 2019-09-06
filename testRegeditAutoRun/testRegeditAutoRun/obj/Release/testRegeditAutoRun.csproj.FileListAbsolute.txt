@@ -1,0 +1,8 @@
+E:\workspace\C#\testRegeditAutoRun\testRegeditAutoRun\bin\Release\testRegeditAutoRun.exe
+E:\workspace\C#\testRegeditAutoRun\testRegeditAutoRun\bin\Release\testRegeditAutoRun.pdb
+E:\workspace\C#\testRegeditAutoRun\testRegeditAutoRun\obj\Release\testRegeditAutoRun.Form1.resources
+E:\workspace\C#\testRegeditAutoRun\testRegeditAutoRun\obj\Release\testRegeditAutoRun.Properties.Resources.resources
+E:\workspace\C#\testRegeditAutoRun\testRegeditAutoRun\obj\Release\testRegeditAutoRun.csproj.GenerateResource.Cache
+E:\workspace\C#\testRegeditAutoRun\testRegeditAutoRun\obj\Release\testRegeditAutoRun.exe
+E:\workspace\C#\testRegeditAutoRun\testRegeditAutoRun\obj\Release\testRegeditAutoRun.pdb
+E:\workspace\C#\testRegeditAutoRun\testRegeditAutoRun\obj\Release\testRegeditAutoRun.csprojResolveAssemblyReference.cache
