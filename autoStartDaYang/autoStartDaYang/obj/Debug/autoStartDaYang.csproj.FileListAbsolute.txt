@@ -1,0 +1,5 @@
+E:\workspace\C#\autoStartDaYang\autoStartDaYang\bin\Debug\autoStartDaYang.exe
+E:\workspace\C#\autoStartDaYang\autoStartDaYang\bin\Debug\autoStartDaYang.pdb
+E:\workspace\C#\autoStartDaYang\autoStartDaYang\obj\Debug\autoStartDaYang.csprojResolveAssemblyReference.cache
+E:\workspace\C#\autoStartDaYang\autoStartDaYang\obj\Debug\autoStartDaYang.exe
+E:\workspace\C#\autoStartDaYang\autoStartDaYang\obj\Debug\autoStartDaYang.pdb
