@@ -18,17 +18,22 @@ namespace monijianpan {
 
         private void button1_Click(object sender, EventArgs e) {
             string pass = "test01";
-            Process p = Process.Start(@"C:\Users\tabjin\Desktop\test2.txt");
+            //Process p = Process.Start(@"D:\Bin\QQScLauncher.exe");
+            //Process p = Process.Start(@"C:\Users\tabjin\Desktop\test2.txt");
+            Process p = Process.Start(@"C:\Users\tabjin\Desktop\H3CLogin.exe");
             Thread.Sleep(1000);
             /*  第一个输入框 start */
             // 切换到第一个账户输入框
             SendKeys.SendWait("{TAB}");
-            //SendKeys.SendWait("^a");
-            //SendKeys.SendWait("{BACKSPACE}");
+            SendKeys.SendWait("^a");
+            SendKeys.SendWait("{BACKSPACE}");
+            SendKeys.SendWait(pass);
             /*  第一个输入框 end */
 
             /*  第二个输入框 start */
             SendKeys.SendWait("{TAB}");
+            SendKeys.SendWait("^a");
+            SendKeys.SendWait("{BACKSPACE}");
             SendKeys.SendWait(pass);
             /*  第二个输入框 end */
 

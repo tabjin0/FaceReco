@@ -6,3 +6,11 @@ E:\workspace\C#\monijianpan\monijianpan\obj\Debug\monijianpan.Properties.Resourc
 E:\workspace\C#\monijianpan\monijianpan\obj\Debug\monijianpan.csproj.GenerateResource.Cache
 E:\workspace\C#\monijianpan\monijianpan\obj\Debug\monijianpan.exe
 E:\workspace\C#\monijianpan\monijianpan\obj\Debug\monijianpan.pdb
+E:\workspace\C#\FaceReco\monijianpan\monijianpan\obj\Debug\monijianpan.exe
+E:\workspace\C#\FaceReco\monijianpan\monijianpan\obj\Debug\monijianpan.pdb
+E:\workspace\C#\FaceReco\monijianpan\monijianpan\bin\Debug\monijianpan.exe
+E:\workspace\C#\FaceReco\monijianpan\monijianpan\bin\Debug\monijianpan.pdb
+E:\workspace\C#\FaceReco\monijianpan\monijianpan\obj\Debug\monijianpan.csprojResolveAssemblyReference.cache
+E:\workspace\C#\FaceReco\monijianpan\monijianpan\obj\Debug\monijianpan.Form1.resources
+E:\workspace\C#\FaceReco\monijianpan\monijianpan\obj\Debug\monijianpan.Properties.Resources.resources
+E:\workspace\C#\FaceReco\monijianpan\monijianpan\obj\Debug\monijianpan.csproj.GenerateResource.Cache
