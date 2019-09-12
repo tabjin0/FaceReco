@@ -20,7 +20,8 @@ namespace monijianpan {
             string pass = "test01";
             //Process p = Process.Start(@"D:\Bin\QQScLauncher.exe");
             //Process p = Process.Start(@"C:\Users\tabjin\Desktop\test2.txt");
-            Process p = Process.Start(@"C:\Users\tabjin\Desktop\H3CLogin.exe");
+            Process p = Process.Start(@"C:\Users\tabjin\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Accessories\Run.lnk");
+            //Process p = Process.Start(@"C:\Users\tabjin\Desktop\H3CLogin.exe");
             Thread.Sleep(1000);
             /*  第一个输入框 start */
             // 切换到第一个账户输入框
