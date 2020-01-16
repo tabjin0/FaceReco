@@ -17,9 +17,9 @@ namespace YunZhiFaceReco {
         public LockScreenForm() {
             InitializeComponent();
             // 软件初始状态之下，屏蔽左"WIN"、右"Win" | 屏蔽Ctrl+Esc | 屏蔽Alt+f4  | 屏蔽Alt+Esc | 屏蔽Alt+Tab | 截获Ctrl+Shift+Esc | 截获Ctrl+Alt+Delete 
-            Hook.Hook_Start();
+            //Hook.Hook_Start();
             // 软件初始状态下默认禁用任务管理器，除非人脸识别成功之后才能打开任务管理器
-            Hook.ShieldMissionTask(1);
+            //Hook.ShieldMissionTask(1);
 
 
             this.WindowState = FormWindowState.Maximized; // 窗体启动就最大化

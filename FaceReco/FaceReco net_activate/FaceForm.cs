@@ -17,6 +17,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.ComponentModel;
+using YunZhiFaceReco.Tabjin_Utils;
 
 namespace YunZhiFaceReco {
     public partial class FaceForm : Form {
@@ -65,6 +66,7 @@ namespace YunZhiFaceReco {
 
         #endregion
 
+        #region 窗体构造函数
         public FaceForm() {
             InitializeComponent();
 
@@ -131,7 +133,7 @@ namespace YunZhiFaceReco {
                 btnStartVideo.Text = "关闭摄像头";
                 deviceVideo = new VideoCaptureDevice(filterInfoCollection[0].MonikerString);
                 // debug
-                MessageBox.Show("FaceForm，摄像头开启状态下，devideVideo \n" + deviceVideo );
+                MessageBox.Show("FaceForm，摄像头开启状态下，devideVideo \n" + deviceVideo);
                 deviceVideo.VideoResolution = deviceVideo.VideoCapabilities[0];
                 // debug
                 MessageBox.Show("FaceForm，摄像头开启状态下，deviceVideo.VideoResolution \n" + deviceVideo.VideoResolution);
@@ -148,6 +150,8 @@ namespace YunZhiFaceReco {
             // TODO 这边需要和人脸检测画框部分比对，也就是出现红框的视频显示摄像头视频框
             videoSource.Show();
         }
+        #endregion
+        
 
         /* ***********************************时间 start *************************************************  */
         public void getNowTimerAndWeek() {
@@ -157,18 +161,13 @@ namespace YunZhiFaceReco {
             timer.Start();
         }
         void timer_Tick(object sender, EventArgs e) {
-            string nowTime = DateTime.Now.ToString();
-            this.labelNowTimeAndWeek.Text = nowTime + "   " + getDayOfWeek();
+            this.labelNowTimeAndWeek.Text = TabTimer.NowTime();
         }
-        public string getDayOfWeek() {
-            string[] weekdays = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
-            string week = weekdays[Convert.ToInt32(DateTime.Now.DayOfWeek)];// 强制转为int
-            return week;
-        }
+
         /* ***********************************时间 end *************************************************  */
 
 
-
+        #region 引擎
         /// <summary>
         /// 初始化引擎
         /// </summary>
@@ -178,7 +177,7 @@ namespace YunZhiFaceReco {
             string appId = (string)reader.GetValue("APP_ID", typeof(string));
             string sdkKey64 = (string)reader.GetValue("SDKKEY64", typeof(string));
             string sdkKey32 = (string)reader.GetValue("SDKKEY32", typeof(string));
-            
+
 
             var is64CPU = Environment.Is64BitProcess;
             if (is64CPU)// 64位
@@ -268,6 +267,8 @@ namespace YunZhiFaceReco {
 
             initVideo();
         }
+        #endregion
+       
 
         /// <summary>
         /// “选择识别图片”按钮事件
