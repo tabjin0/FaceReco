@@ -8,11 +8,11 @@ using Regedit_Learn.initUser.pojo;
 using Regedit_Learn.initUser.vo;
 
 namespace Regedit_Learn.initUser.model {
-    public class Register {
+    public class RegisterOperator {
         string _baseKey = "HARDWARE";
         string _subKey = @"Dayang\dydatabase\NetManageDBSetting";
         RegisterInfo _registerInfo;
-        public Register(string baseKey, string subKey, RegisterInfo registerInfo) {
+        public RegisterOperator(string baseKey, string subKey, RegisterInfo registerInfo) {
             _baseKey = baseKey;
             _subKey = subKey;
             _registerInfo = registerInfo;

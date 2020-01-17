@@ -53,7 +53,6 @@ namespace YunZhiFaceReco {
             this.button1 = new System.Windows.Forms.Button();
             this.textBoxTempLockPwd = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.labelX = new System.Windows.Forms.Label();
             this.labelY = new System.Windows.Forms.Label();
             this.labelHeight = new System.Windows.Forms.Label();
@@ -62,6 +61,13 @@ namespace YunZhiFaceReco {
             this.labelMultiFaceInfo = new System.Windows.Forms.Label();
             this.labelMaxFace = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.comboBoxMutiChannel = new System.Windows.Forms.ComboBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.labelChannel = new System.Windows.Forms.Label();
+            this.labelUsername = new System.Windows.Forms.Label();
+            this.labelPwd = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.picImageCompare)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSwiper)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -314,17 +320,6 @@ namespace YunZhiFaceReco {
             this.label6.TabIndex = 53;
             this.label6.Text = "锁屏临时密码";
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(4, 981);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(1196, 75);
-            this.pictureBox2.TabIndex = 55;
-            this.pictureBox2.TabStop = false;
-            // 
             // labelX
             // 
             this.labelX.AutoSize = true;
@@ -394,9 +389,70 @@ namespace YunZhiFaceReco {
             this.label2.Font = new System.Drawing.Font("微软雅黑", 72F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(12, -1);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(916, 124);
+            this.label2.Size = new System.Drawing.Size(1204, 124);
             this.label2.TabIndex = 63;
-            this.label2.Text = "智慧化身份识别系统";
+            this.label2.Text = "扬州电视台制作网桌面管理";
+            // 
+            // comboBoxMutiChannel
+            // 
+            this.comboBoxMutiChannel.FormattingEnabled = true;
+            this.comboBoxMutiChannel.Location = new System.Drawing.Point(512, 263);
+            this.comboBoxMutiChannel.Name = "comboBoxMutiChannel";
+            this.comboBoxMutiChannel.Size = new System.Drawing.Size(121, 20);
+            this.comboBoxMutiChannel.TabIndex = 64;
+            this.comboBoxMutiChannel.SelectedIndexChanged += new System.EventHandler(this.comboBoxMutiChannel_SelectedIndexChanged);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(4, 759);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(1196, 75);
+            this.pictureBox2.TabIndex = 55;
+            this.pictureBox2.TabStop = false;
+            // 
+            // labelChannel
+            // 
+            this.labelChannel.AutoSize = true;
+            this.labelChannel.Location = new System.Drawing.Point(465, 266);
+            this.labelChannel.Name = "labelChannel";
+            this.labelChannel.Size = new System.Drawing.Size(41, 12);
+            this.labelChannel.TabIndex = 65;
+            this.labelChannel.Text = "频道：";
+            // 
+            // labelUsername
+            // 
+            this.labelUsername.AutoSize = true;
+            this.labelUsername.Location = new System.Drawing.Point(453, 306);
+            this.labelUsername.Name = "labelUsername";
+            this.labelUsername.Size = new System.Drawing.Size(53, 12);
+            this.labelUsername.TabIndex = 66;
+            this.labelUsername.Text = "用户名：";
+            // 
+            // labelPwd
+            // 
+            this.labelPwd.AutoSize = true;
+            this.labelPwd.Location = new System.Drawing.Point(465, 345);
+            this.labelPwd.Name = "labelPwd";
+            this.labelPwd.Size = new System.Drawing.Size(41, 12);
+            this.labelPwd.TabIndex = 67;
+            this.labelPwd.Text = "密码：";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(512, 303);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 21);
+            this.textBox1.TabIndex = 68;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(512, 342);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 21);
+            this.textBox2.TabIndex = 69;
             // 
             // FaceForm
             // 
@@ -405,6 +461,12 @@ namespace YunZhiFaceReco {
             this.AutoSize = true;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.labelPwd);
+            this.Controls.Add(this.labelUsername);
+            this.Controls.Add(this.labelChannel);
+            this.Controls.Add(this.comboBoxMutiChannel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.labelMaxFace);
             this.Controls.Add(this.labelMultiFaceInfo);
@@ -484,7 +546,6 @@ namespace YunZhiFaceReco {
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBoxTempLockPwd;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.PictureBox pictureBox2;
         private Label labelX;
         private Label labelY;
         private Label labelHeight;
@@ -493,6 +554,13 @@ namespace YunZhiFaceReco {
         private Label labelMultiFaceInfo;
         private Label labelMaxFace;
         private Label label2;
+        private ComboBox comboBoxMutiChannel;
+        private PictureBox pictureBox2;
+        private Label labelChannel;
+        private Label labelUsername;
+        private Label labelPwd;
+        private TextBox textBox1;
+        private TextBox textBox2;
     }
 }
 

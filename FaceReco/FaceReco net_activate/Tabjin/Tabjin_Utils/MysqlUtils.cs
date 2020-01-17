@@ -38,7 +38,7 @@ namespace YunZhiFaceReco
         }
         // 打开数据库连接
         //open connection to database
-        private bool OpenConnection()
+        public bool OpenConnection()
         {
             try
             {
@@ -47,10 +47,6 @@ namespace YunZhiFaceReco
             }
             catch (MySqlException ex)
             {
-                //When handling errors, you can your application's response based on the error number.
-                //The two most common error numbers when connecting are as follows:
-                //0: Cannot connect to server.
-                //1045: Invalid user name and/or password.
                 switch (ex.Number)
                 {
                     case 0:
@@ -65,7 +61,7 @@ namespace YunZhiFaceReco
             }
         }
         //Close connection
-        private bool CloseConnection()
+        public bool CloseConnection()
         {
             try
             {
@@ -78,7 +74,11 @@ namespace YunZhiFaceReco
                 return false;
             }
         }
-        //Insert statement
+        
+        /// <summary>
+        /// 插入用户特征值
+        /// </summary>
+        /// <param name="users"></param>
         public void InsertUserFaceFeature(Users users)
         {
             string id = users.Id;
@@ -117,6 +117,10 @@ namespace YunZhiFaceReco
             }
         }
 
+        /// <summary>
+        /// 通过特征比对用户
+        /// </summary>
+        /// <returns></returns>
         public List<byte[]> SelectUserFaceByFeature() 
         {
             string query = "SELECT `feature` FROM `face-reco`.`face`";// 全部查询
@@ -157,6 +161,12 @@ namespace YunZhiFaceReco
                 return list;
             }
         }
+
+        /// <summary>
+        /// 通过id精确查找用户
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public byte[] PriciseSelectById(string id)
         {
            

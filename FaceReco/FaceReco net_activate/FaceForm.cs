@@ -18,6 +18,9 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.ComponentModel;
 using YunZhiFaceReco.Tabjin_Utils;
+using YunZhiFaceReco.Tabjin.Config;
+using Regedit_Learn.initUser.pojo;
+using Regedit_Learn.initUser.model;
 
 namespace YunZhiFaceReco {
     public partial class FaceForm : Form {
@@ -151,9 +154,8 @@ namespace YunZhiFaceReco {
             videoSource.Show();
         }
         #endregion
-        
 
-        /* ***********************************时间 start *************************************************  */
+        #region 时间
         public void getNowTimerAndWeek() {
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
             timer.Interval = 1000;// 1秒
@@ -163,9 +165,7 @@ namespace YunZhiFaceReco {
         void timer_Tick(object sender, EventArgs e) {
             this.labelNowTimeAndWeek.Text = TabTimer.NowTime();
         }
-
-        /* ***********************************时间 end *************************************************  */
-
+        #endregion
 
         #region 引擎
         /// <summary>
@@ -268,8 +268,8 @@ namespace YunZhiFaceReco {
             initVideo();
         }
         #endregion
-       
 
+        #region 窗体控件相关
         /// <summary>
         /// “选择识别图片”按钮事件
         /// </summary>
@@ -420,7 +420,6 @@ namespace YunZhiFaceReco {
                 picImageCompare.Image = srcImage;
             }
         }
-
 
         private object locker = new object();
 
@@ -610,6 +609,7 @@ namespace YunZhiFaceReco {
             imagesFeatureList.Clear();
             imagePathList.Clear();
         }
+        #endregion
 
         #region 视频检测相关
 
@@ -746,7 +746,7 @@ namespace YunZhiFaceReco {
                 //根据Rect进行画框
                 g.DrawRectangle(pen, x, y, width, height);
                 // debug
-               // MessageBox.Show("FaceForm，摄像头运行中，g \n" + g);
+                // MessageBox.Show("FaceForm，摄像头运行中，g \n" + g);
 
                 // 调整摄像头视频框
                 if (rect.left.ToString() == "0") {
@@ -755,11 +755,11 @@ namespace YunZhiFaceReco {
                 else {
                     int xVideoSource = (int)(0.5 * (this.Width - this.videoSource.Width));
                     int yVideoSource = (int)(0.5 * (this.Height - this.videoSource.Height));
-                   this.videoSource.Location = new System.Drawing.Point(xVideoSource, yVideoSource);
+                    this.videoSource.Location = new System.Drawing.Point(xVideoSource, yVideoSource);
                     //this.videoSource.Location = new System.Drawing.Point(0, 0);
 
-                   Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
-                   this.ClientSize = new System.Drawing.Size(ScreenArea.Width, ScreenArea.Height);
+                    Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
+                    this.ClientSize = new System.Drawing.Size(ScreenArea.Width, ScreenArea.Height);
                 }
                 // this.logBox.AppendText(rect.left.ToString() + "\n");
 
@@ -853,9 +853,9 @@ namespace YunZhiFaceReco {
                                             }
 
                                             // 隔段时间打开托盘
-                                            Thread.Sleep(5000);// 设置了30秒再次验证人脸 
+                                            Thread.Sleep(Tab_Config.CheckFaceTimeInterval);// 设置了30秒再次验证人脸 
                                         }
-                                        
+
                                         // 打开托盘
                                         this.Visible = true;
                                         this.WindowState = FormWindowState.Normal;
@@ -929,14 +929,14 @@ namespace YunZhiFaceReco {
                                         {
                                             //this.Hide();
                                             //this.notifyIcon.Visible = true;
-                                            
+
 
                                             this.Hide();
                                             this.notifyIcon.Visible = true;
 
                                             this.button1.Enabled = true;// 开启锁屏按钮
                                             this.TopMost = false;// 识别通过允许界面不是最顶界面
-                                           // MessageBox.Show("您是当前操作用户");
+                                            // MessageBox.Show("您是当前操作用户");
 
                                             //Hook.Hook_Clear(); // 人脸识别通过，取消屏蔽左"WIN"、右"Win" | 屏蔽Ctrl+Esc | 屏蔽Alt+f4  | 屏蔽Alt+Esc | 屏蔽Alt+Tab | 截获Ctrl+Shift+Esc | 截获Ctrl+Alt+Delete 
                                             //Hook.ShieldMissionTask(0);// 人脸识别通过之后，取消屏蔽任务管理器
@@ -959,9 +959,9 @@ namespace YunZhiFaceReco {
                                             }
 
                                             // 隔段时间打开托盘
-                                            Thread.Sleep(5000);// 设置了30秒再次验证人脸 
+                                            Thread.Sleep(Tab_Config.CheckFaceTimeInterval);// 设置了30秒再次验证人脸 
                                         }
-                                        
+
                                         // 打开托盘
                                         this.Visible = true;
                                         this.WindowState = FormWindowState.Normal;
@@ -1077,7 +1077,8 @@ namespace YunZhiFaceReco {
 
         #endregion
 
-        /********************************************最小至托盘 start*******************************************/
+
+        #region 右下角托盘
         private void FaceForm_SizeChanged(object sender, EventArgs e) {
             //当窗体最小化时，隐藏到系统托盘中
             if (WindowState == FormWindowState.Minimized) {
@@ -1116,10 +1117,10 @@ namespace YunZhiFaceReco {
                 return;
             }
         }
+        #endregion
 
 
-        /********************************************最小至托盘 end*******************************************/
-
+        #region 锁屏
         /// <summary>
         /// 锁屏按钮
         /// </summary>
@@ -1145,6 +1146,25 @@ namespace YunZhiFaceReco {
             lockThread.IsBackground = true;
             lockThread.Start();
         }
+        #endregion
 
+        #region 用户登录数据切换
+        private void comboBox1_load() {
+            comboBoxMutiChannel.Items.Add("城市高清网");
+            comboBoxMutiChannel.Items.Add("生活高清网");
+        }
+        #endregion
+
+        private void comboBoxMutiChannel_SelectedIndexChanged(object sender, EventArgs e) {
+            string _baseKey = "HARDWARE";
+            string _subKey = @"Dayang\dydatabase\NetManageDBSetting";
+            MessageBox.Show("您选择的频道是：" + comboBoxMutiChannel.Text, "提示");
+            if (comboBoxMutiChannel.Text.Length != 0) {
+                RegisterInfo registerInfo = InitUserDBInfo.init(comboBoxMutiChannel.Text);// 
+                RegisterOperator registerOperator = new RegisterOperator(_baseKey, _subKey, registerInfo);
+                registerOperator.AddInfoToRegedit();//ok 多频道信息注入注册表
+
+            }
+        }
     }
 }
