@@ -16,7 +16,7 @@ namespace YunZhiFaceReco.TV_Create.MUti_Channel {
             mysqlUtils.InsertTVCreateDBInfoToFaceRecoDB(channelInfo);
         }
 
-        public static ChannelInfo QueryChannels() {
+        public static List<ChannelInfo> QueryChannels() {
             MysqlUtils mysqlUtils = new MysqlUtils();
             return mysqlUtils.QueryChannels();
         }

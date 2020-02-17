@@ -22,6 +22,8 @@ namespace YunZhiFaceReco {
             // 初始化连接
             Initialize();
         }
+
+        #region 初始化、开关数据库
         private void Initialize() {
             server = "localhost";
             db = "face-reco";
@@ -68,6 +70,7 @@ namespace YunZhiFaceReco {
                 return false;
             }
         }
+        #endregion
 
         #region 人脸识别相关
         //Insert statement
@@ -218,9 +221,10 @@ namespace YunZhiFaceReco {
             }
         }
 
-        public ChannelInfo QueryChannels() {
+        public List<ChannelInfo> QueryChannels() {
             string query = "SELECT * FROM `face-reco`.`muti_channel`";// 全部查询
-            ChannelInfo channelInfo = new ChannelInfo();
+            
+            List<ChannelInfo> channelInfoLift = new List<ChannelInfo>();
             // 创建list存储数据
             //List<byte[]> list = new List<byte[]>();
             //byte[] faceFeature = null;
@@ -235,7 +239,7 @@ namespace YunZhiFaceReco {
 
                 // 存储数据
                 while (dataReader.Read()) {
-
+                    ChannelInfo channelInfo = new ChannelInfo();
                     channelInfo.channelId = Convert.ToString(dataReader["id"]);
                     channelInfo.channelName = Convert.ToString(dataReader["channel_name"]);
                     channelInfo.channelServerName = Convert.ToString(dataReader["channel_server_name"]);
@@ -243,6 +247,7 @@ namespace YunZhiFaceReco {
                     channelInfo.channelDatabaseType = Convert.ToInt32(dataReader["channel_database_type"]);
                     channelInfo.channelUserName = Convert.ToString(dataReader["channel_user_name"]);
                     channelInfo.channelDatabasePassword = Convert.ToString(dataReader["channel_database_password"]);
+                    channelInfoLift.Add(channelInfo);
                 }
 
                 //close Data Reader
@@ -252,9 +257,9 @@ namespace YunZhiFaceReco {
                 this.CloseConnection();
 
                 //return list to be displayed
-               
+
             }
-            return channelInfo;
+            return channelInfoLift;
         }
         #endregion
     }

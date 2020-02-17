@@ -62,6 +62,8 @@ namespace YunZhiFaceReco {
 
             txtThreshold.Enabled = false;// 阈值不可编辑状态
             getNowTimerAndWeek();// 获取当前时间和星期几
+
+            initComboBox();
         }
 
         #region 时间
@@ -636,12 +638,17 @@ namespace YunZhiFaceReco {
             InitChannel initChannel = new InitChannel();
             //initChannel.AddChannel(channelInfo);
             //initChannel.QueryChannels();
+            List<ChannelInfo> lsit = InitChannel.QueryChannels();
+            Console.WriteLine("124");
 
         }
 
-        public void initComboBox() {
+        private void initComboBox() {
             List<ChannelInfo> channelInfoList = InitChannel.QueryChannels();
-            comboBox1.Items.Add("");
+            foreach (var item in channelInfoList) {
+                comboBox1.Items.Add(item.channelName);
+            }
+
         }
     }
 }

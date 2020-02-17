@@ -24,6 +24,8 @@ namespace YunZhiFaceReco
             // 初始化连接
             Initialize();
         }
+
+        #region 初始化、开闭数据库
         private void Initialize()
         {
             server = "localhost";
@@ -74,7 +76,8 @@ namespace YunZhiFaceReco
                 return false;
             }
         }
-        
+        #endregion
+
         /// <summary>
         /// 插入用户特征值
         /// </summary>
