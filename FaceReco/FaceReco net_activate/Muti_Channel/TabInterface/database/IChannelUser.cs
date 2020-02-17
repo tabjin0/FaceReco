@@ -14,6 +14,7 @@ namespace Regedit_Learn.TabInterface.database {
 
     class ChannelUserImpl : IChannelUser {
         public RegisterInfo queryUserMutiDBInfo(String channelName) {
+
             return null;
         }
     }

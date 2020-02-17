@@ -85,6 +85,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\x64\Release\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\x64\Release\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -105,7 +109,7 @@
     <Compile Include="Muti_Channel\initUser\model\Auth.cs" />
     <Compile Include="Muti_Channel\initUser\model\InitUserDBInfo.cs" />
     <Compile Include="Muti_Channel\initUser\model\InitUserLogin.cs" />
-    <Compile Include="Muti_Channel\initUser\model\Register.cs" />
+    <Compile Include="Muti_Channel\initUser\model\RegisterOperator.cs" />
     <Compile Include="Muti_Channel\initUser\pojo\RegisterInfo.cs" />
     <Compile Include="Muti_Channel\initUser\pojo\UserInfo.cs" />
     <Compile Include="Muti_Channel\initUser\util\SQLServer_Connector.cs" />
@@ -116,6 +120,7 @@
     <Compile Include="LockScreenForm.Designer.cs">
       <DependentUpon>LockScreenForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Muti_Channel\TabInterface\database\IChannelUser.cs" />
     <Compile Include="SDKModels\ASF_AgeInfo.cs" />
     <Compile Include="SDKModels\ASF_Face3DAngle.cs" />
     <Compile Include="SDKModels\ASF_FaceFeature.cs" />
@@ -144,13 +149,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SDKUtil\ASFFunctions.cs" />
-    <Compile Include="Tabjin_Utils\KeyboardHook.cs" />
-    <Compile Include="Tabjin_Utils\MysqlUtils.cs" />
-    <Compile Include="Tabjin_Utils\ProcessMng.cs" />
-    <Compile Include="Tabjin_Utils\SidUtils.cs" />
-    <Compile Include="Tabjin_Utils\TabArrayUtils.cs" />
-    <Compile Include="Tabjin_Utils\TabConvert.cs" />
-    <Compile Include="Tabjin_Utils\TabTimer.cs" />
+    <Compile Include="Tabjin\Config\Tab_Config.cs" />
+    <Compile Include="Tabjin\Tabjin_Utils\KeyboardHook.cs" />
+    <Compile Include="Tabjin\Tabjin_Utils\MysqlUtils.cs" />
+    <Compile Include="Tabjin\Tabjin_Utils\ProcessMng.cs" />
+    <Compile Include="Tabjin\Tabjin_Utils\SidUtils.cs" />
+    <Compile Include="Tabjin\Tabjin_Utils\TabArrayUtils.cs" />
+    <Compile Include="Tabjin\Tabjin_Utils\TabConvert.cs" />
+    <Compile Include="Tabjin\Tabjin_Utils\TabTimer.cs" />
     <Compile Include="Users.cs" />
     <Compile Include="Utils\FaceUtil.cs" />
     <Compile Include="Utils\ImageUtil.cs" />
