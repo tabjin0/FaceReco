@@ -54,6 +54,7 @@
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.button_MutiChannelInfo_Sync = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picImageCompare)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSwiper)).BeginInit();
             this.SuspendLayout();
@@ -293,10 +294,21 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(621, 27);
+            this.comboBox1.Location = new System.Drawing.Point(621, 65);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 52;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // button_MutiChannelInfo_Sync
+            // 
+            this.button_MutiChannelInfo_Sync.Location = new System.Drawing.Point(621, 12);
+            this.button_MutiChannelInfo_Sync.Name = "button_MutiChannelInfo_Sync";
+            this.button_MutiChannelInfo_Sync.Size = new System.Drawing.Size(145, 23);
+            this.button_MutiChannelInfo_Sync.TabIndex = 53;
+            this.button_MutiChannelInfo_Sync.Text = "多频道数据同步";
+            this.button_MutiChannelInfo_Sync.UseVisualStyleBackColor = true;
+            this.button_MutiChannelInfo_Sync.Click += new System.EventHandler(this.button_MutiChannelInfo_Sync_Click);
             // 
             // FaceForm
             // 
@@ -307,6 +319,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1441, 836);
+            this.Controls.Add(this.button_MutiChannelInfo_Sync);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnClearFaceList);
@@ -370,6 +383,7 @@
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button button_MutiChannelInfo_Sync;
     }
 }
 

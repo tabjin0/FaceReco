@@ -11,7 +11,9 @@ using YunZhiFaceReco.SDKModels;
 using YunZhiFaceReco.SDKUtil;
 using YunZhiFaceReco.TV_Create.MUti_Channel;
 using YunZhiFaceReco.TV_Create.MUti_Channel.pojo;
+using YunZhiFaceReco.TV_Create.MUti_Channel.repo;
 using YunZhiFaceReco.Utils;
+using YunZhiFaceRecoDataManager.TV_Create.MUti_Channel.model;
 
 namespace YunZhiFaceReco {
     public partial class FaceForm : Form {
@@ -51,6 +53,10 @@ namespace YunZhiFaceReco {
 
         #endregion
 
+        #region 频道相关
+        private ChannelInfo currentChannel = null;
+        #endregion
+
         public FaceForm() {
             InitializeComponent();
 
@@ -63,7 +69,7 @@ namespace YunZhiFaceReco {
             txtThreshold.Enabled = false;// 阈值不可编辑状态
             getNowTimerAndWeek();// 获取当前时间和星期几
 
-            initComboBox();
+            initMutiChannelComboBox();
         }
 
         #region 时间
@@ -635,20 +641,46 @@ namespace YunZhiFaceReco {
             channelInfo.channelServerName = "192.168.138.45";
             channelInfo.channelUserName = "sa";
             channelInfo.channelName = "城市高清网";
-            InitChannel initChannel = new InitChannel();
+            Channel initChannel = new Channel();
             //initChannel.AddChannel(channelInfo);
             //initChannel.QueryChannels();
-            List<ChannelInfo> lsit = InitChannel.QueryChannels();
+            List<ChannelInfo> lsit = Channel.QueryChannels();
             Console.WriteLine("124");
 
         }
 
-        private void initComboBox() {
-            List<ChannelInfo> channelInfoList = InitChannel.QueryChannels();
+        /// <summary>
+        /// 初始化多频道信息
+        /// </summary>
+        private void initMutiChannelComboBox() {
+            List<ChannelInfo> channelInfoList = Channel.QueryChannels();
             foreach (var item in channelInfoList) {
                 comboBox1.Items.Add(item.channelName);
             }
-
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
+            var a = comboBox1.SelectedItem;
+            currentChannel = Channel.QueryChannel(comboBox1.SelectedItem.ToString());
+            Console.WriteLine(a);
+        }
+
+        private void button_MutiChannelInfo_Sync_Click(object sender, EventArgs e) {
+            // 数据迁移
+
+            //2.清洗sqlserver数据
+            //3.新的数据注入到mysql中的face表
+            if (currentChannel != null) {
+                //1.选择指定的sqlserver数据表加载
+                // 初始化sqlserver数据库连接
+
+                string _connectString = "server='" + currentChannel.channelServerName + "';database='" + currentChannel.channelDatabaseName + "';uid='" + currentChannel.channelUserName + "';pwd='" + currentChannel.channelDatabasePassword + "'";
+                List<UserInfo> userInfoList = User.QueryUserInfos(_connectString);
+
+
+            }
+        }
+
+
     }
 }

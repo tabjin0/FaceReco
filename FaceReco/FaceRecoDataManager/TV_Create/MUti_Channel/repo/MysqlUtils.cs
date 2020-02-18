@@ -221,9 +221,13 @@ namespace YunZhiFaceReco {
             }
         }
 
+        /// <summary>
+        /// 获取多频道的配置信息
+        /// </summary>
+        /// <returns></returns>
         public List<ChannelInfo> QueryChannels() {
             string query = "SELECT * FROM `face-reco`.`muti_channel`";// 全部查询
-            
+
             List<ChannelInfo> channelInfoLift = new List<ChannelInfo>();
             // 创建list存储数据
             //List<byte[]> list = new List<byte[]>();
@@ -260,6 +264,42 @@ namespace YunZhiFaceReco {
 
             }
             return channelInfoLift;
+        }
+
+        /// <summary>
+        /// 精确查找多频道配置信息
+        /// </summary>
+        /// <param name="channelName">多频道频道名</param>
+        /// <returns></returns>
+        public ChannelInfo PreciseQueryChannel(string channelName) {
+            string query = "SELECT * FROM `face-reco`.`muti_channel` WHERE channel_name = '" + channelName + "'";
+
+            ChannelInfo channelInfo = new ChannelInfo();
+
+            if (this.OpenConnection() == true) {
+                // 创建命令
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                // 读取数据
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                // 存储数据
+                while (dataReader.Read()) {
+                    channelInfo.channelId = Convert.ToString(dataReader["id"]);
+                    channelInfo.channelName = Convert.ToString(dataReader["channel_name"]);
+                    channelInfo.channelServerName = Convert.ToString(dataReader["channel_server_name"]);
+                    channelInfo.channelDatabaseName = Convert.ToString(dataReader["channel_database_name"]);
+                    channelInfo.channelDatabaseType = Convert.ToInt32(dataReader["channel_database_type"]);
+                    channelInfo.channelUserName = Convert.ToString(dataReader["channel_user_name"]);
+                    channelInfo.channelDatabasePassword = Convert.ToString(dataReader["channel_database_password"]);
+                }
+
+                //close Data Reader
+                dataReader.Close();
+
+                //close Connection
+                this.CloseConnection();
+            }
+            return channelInfo;
         }
         #endregion
     }
