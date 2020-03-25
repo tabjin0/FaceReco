@@ -631,16 +631,16 @@ namespace YunZhiFaceReco {
                 threshold = 0.8f;
             }
         }
-
+        #region 多频道信息
         private void button1_Click(object sender, EventArgs e) {
             ChannelInfo channelInfo = new ChannelInfo();
-            channelInfo.channelId = SidUtils.sid();
-            channelInfo.channelDatabaseName = "dycommondatabase30";
-            channelInfo.channelDatabaseType = 1;
-            channelInfo.channelDatabasePassword = "1100110";
-            channelInfo.channelServerName = "192.168.138.45";
-            channelInfo.channelUserName = "sa";
-            channelInfo.channelName = "城市高清网";
+            channelInfo.Id = SidUtils.sid();
+            channelInfo.DatabaseName = "dycommondatabase30";
+            channelInfo.DatabaseType = 1;
+            channelInfo.DatabasePassword = "1100110";
+            channelInfo.ServerName = "192.168.138.45";
+            channelInfo.UserName = "sa";
+            channelInfo.Name = "城市高清网";
             Channel initChannel = new Channel();
             //initChannel.AddChannel(channelInfo);
             //initChannel.QueryChannels();
@@ -649,16 +649,22 @@ namespace YunZhiFaceReco {
 
         }
 
+
         /// <summary>
         /// 初始化多频道信息
         /// </summary>
         private void initMutiChannelComboBox() {
             List<ChannelInfo> channelInfoList = Channel.QueryChannels();
             foreach (var item in channelInfoList) {
-                comboBox1.Items.Add(item.channelName);
+                comboBox1.Items.Add(item.Name);
             }
         }
 
+        /// <summary>
+        ///  选择多频道数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
             var a = comboBox1.SelectedItem;
             currentChannel = Channel.QueryChannel(comboBox1.SelectedItem.ToString());
@@ -667,19 +673,22 @@ namespace YunZhiFaceReco {
 
         private void button_MutiChannelInfo_Sync_Click(object sender, EventArgs e) {
             // 数据迁移
-
+            MessageBox.Show("测试数据迁移");
+            Console.WriteLine("currentChannel" + currentChannel);
             //2.清洗sqlserver数据
             //3.新的数据注入到mysql中的face表
             if (currentChannel != null) {
                 //1.选择指定的sqlserver数据表加载
                 // 初始化sqlserver数据库连接
 
-                string _connectString = "server='" + currentChannel.channelServerName + "';database='" + currentChannel.channelDatabaseName + "';uid='" + currentChannel.channelUserName + "';pwd='" + currentChannel.channelDatabasePassword + "'";
-                List<UserInfo> userInfoList = User.QueryUserInfos(_connectString);
-
+                string _connectString = "server='" + currentChannel.ServerName + "';database='" + currentChannel.DatabaseName + "';uid='" + currentChannel.UserName + "';pwd='" + currentChannel.DatabasePassword + "'";
+                List<UserInfos> userInfoList = User.QueryUserInfos(_connectString);
+                Console.WriteLine(_connectString);
 
             }
         }
+        #endregion
+
 
 
     }

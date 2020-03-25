@@ -9,6 +9,7 @@ using System.Linq;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using YunZhiFaceReco.TV_Create.MUti_Channel.pojo;
+using System.Configuration;
 
 
 namespace YunZhiFaceReco {
@@ -18,20 +19,22 @@ namespace YunZhiFaceReco {
         private string db;
         private string uid;
         private string password;
+        AppSettingsReader configuration = new AppSettingsReader();
         public MysqlUtils() {
+
             // 初始化连接
-            Initialize();
+            this.server = (string)configuration.GetValue("MYSQL_SERVER_NAME", typeof(string));
+            this.db = (string)configuration.GetValue("MYSQL_DATABASE", typeof(string));
+            this.uid = (string)configuration.GetValue("MYSQL_UID", typeof(string));
+            this.password = (string)configuration.GetValue("MYSQL_PASSWORD_NAME", typeof(string));
+            this.Initialize();
         }
 
         #region 初始化、开关数据库
         private void Initialize() {
-            server = "localhost";
-            db = "face-reco";
-            uid = "root";
-            password = "zj258025";
 
             string connectionString;
-            connectionString = "SERVER=" + server + ";" + "DATABASE=" + db + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";charset=utf8";
+            connectionString = "SERVER=" + this.server + ";" + "DATABASE=" + this.db + ";" + "UID=" + this.uid + ";" + "PASSWORD=" + this.password + ";charset=utf8";
 
             connection = new MySqlConnection(connectionString);
         }
@@ -43,23 +46,19 @@ namespace YunZhiFaceReco {
                 return true;
             }
             catch (MySqlException ex) {
-                //When handling errors, you can your application's response based on the error number.
-                //The two most common error numbers when connecting are as follows:
-                //0: Cannot connect to server.
-                //1045: Invalid user name and/or password.
                 switch (ex.Number) {
                     case 0:
-                        MessageBox.Show("Cannot connect to server.  Contact administrator");
+                        MessageBox.Show("无法连接数据库");
                         break;
 
                     case 1045:
-                        MessageBox.Show("Invalid username/password, please try again");
+                        MessageBox.Show("无效的用户名或密码，请重试");
                         break;
                 }
                 return false;
             }
         }
-        //Close connection
+        // 关闭连接
         private bool CloseConnection() {
             try {
                 connection.Close();
@@ -196,20 +195,20 @@ namespace YunZhiFaceReco {
         /// </summary>
         /// <param name="channelInfo"></param>
         public void InsertTVCreateDBInfoToFaceRecoDB(ChannelInfo channelInfo) {
-            string query = "INSERT INTO `face-reco`.`muti_channel` (`id`, `channel_name`, `channel_database_name`, `channel_database_type`, `channel_database_password`, `channel_server_name`, `channel_user_name`) VALUES (@id, @channelName, @channelDatabaseName, @channelDatbaseType, @channelDatabasePassword, @channelServerName, @channelUserName)";
+            string query = "INSERT INTO `face-reco`.`muti_channel` (`id`, `name`, `database_name`, `database_type`, `database_password`, `server_name`, `user_name`) VALUES (@id, @Name, @DatabaseName, @DatbaseType, @DatabasePassword, @ServerName, @UserName)";
 
             //open connection
             if (this.OpenConnection() == true) {
                 //create command and assign the query and connection from the constructor
                 using (MySqlCommand cmd = new MySqlCommand(query, connection)) {
                     // 参数插入
-                    cmd.Parameters.Add("@id", MySqlDbType.VarChar).Value = channelInfo.channelId;
-                    cmd.Parameters.Add("@channelName", MySqlDbType.VarChar).Value = channelInfo.channelName;
-                    cmd.Parameters.Add("@channelDatabaseName", MySqlDbType.VarChar).Value = channelInfo.channelDatabaseName;
-                    cmd.Parameters.Add("@channelDatbaseType", MySqlDbType.Int16).Value = channelInfo.channelDatabaseType;
-                    cmd.Parameters.Add("@channelDatabasePassword", MySqlDbType.VarChar).Value = channelInfo.channelDatabasePassword;
-                    cmd.Parameters.Add("@channelServerName", MySqlDbType.VarChar).Value = channelInfo.channelServerName;
-                    cmd.Parameters.Add("@channelUserName", MySqlDbType.VarChar).Value = channelInfo.channelUserName;
+                    cmd.Parameters.Add("@id", MySqlDbType.VarChar).Value = channelInfo.Id;
+                    cmd.Parameters.Add("@Name", MySqlDbType.VarChar).Value = channelInfo.Name;
+                    cmd.Parameters.Add("@DatabaseName", MySqlDbType.VarChar).Value = channelInfo.DatabaseName;
+                    cmd.Parameters.Add("@DatbaseType", MySqlDbType.Int16).Value = channelInfo.DatabaseType;
+                    cmd.Parameters.Add("@DatabasePassword", MySqlDbType.VarChar).Value = channelInfo.DatabasePassword;
+                    cmd.Parameters.Add("@ServerName", MySqlDbType.VarChar).Value = channelInfo.ServerName;
+                    cmd.Parameters.Add("@UserName", MySqlDbType.VarChar).Value = channelInfo.UserName;
 
                     //Execute command
                     cmd.ExecuteNonQuery();
@@ -227,13 +226,7 @@ namespace YunZhiFaceReco {
         /// <returns></returns>
         public List<ChannelInfo> QueryChannels() {
             string query = "SELECT * FROM `face-reco`.`muti_channel`";// 全部查询
-
             List<ChannelInfo> channelInfoLift = new List<ChannelInfo>();
-            // 创建list存储数据
-            //List<byte[]> list = new List<byte[]>();
-            //byte[] faceFeature = null;
-            //byte[] finalFaceFeature = null;
-
             //Open connection
             if (this.OpenConnection() == true) {
                 // 创建命令
@@ -244,13 +237,13 @@ namespace YunZhiFaceReco {
                 // 存储数据
                 while (dataReader.Read()) {
                     ChannelInfo channelInfo = new ChannelInfo();
-                    channelInfo.channelId = Convert.ToString(dataReader["id"]);
-                    channelInfo.channelName = Convert.ToString(dataReader["channel_name"]);
-                    channelInfo.channelServerName = Convert.ToString(dataReader["channel_server_name"]);
-                    channelInfo.channelDatabaseName = Convert.ToString(dataReader["channel_database_name"]);
-                    channelInfo.channelDatabaseType = Convert.ToInt32(dataReader["channel_database_type"]);
-                    channelInfo.channelUserName = Convert.ToString(dataReader["channel_user_name"]);
-                    channelInfo.channelDatabasePassword = Convert.ToString(dataReader["channel_database_password"]);
+                    channelInfo.Id = Convert.ToString(dataReader["id"]);
+                    channelInfo.Name = Convert.ToString(dataReader["name"]);
+                    channelInfo.ServerName = Convert.ToString(dataReader["server_name"]);
+                    channelInfo.DatabaseName = Convert.ToString(dataReader["database_name"]);
+                    channelInfo.DatabaseType = Convert.ToInt32(dataReader["database_type"]);
+                    channelInfo.UserName = Convert.ToString(dataReader["username"]);
+                    channelInfo.DatabasePassword = Convert.ToString(dataReader["database_password"]);
                     channelInfoLift.Add(channelInfo);
                 }
 
@@ -272,7 +265,7 @@ namespace YunZhiFaceReco {
         /// <param name="channelName">多频道频道名</param>
         /// <returns></returns>
         public ChannelInfo PreciseQueryChannel(string channelName) {
-            string query = "SELECT * FROM `face-reco`.`muti_channel` WHERE channel_name = '" + channelName + "'";
+            string query = "SELECT * FROM `face-reco`.`muti_channel` WHERE name = '" + channelName + "'";
 
             ChannelInfo channelInfo = new ChannelInfo();
 
@@ -284,13 +277,13 @@ namespace YunZhiFaceReco {
 
                 // 存储数据
                 while (dataReader.Read()) {
-                    channelInfo.channelId = Convert.ToString(dataReader["id"]);
-                    channelInfo.channelName = Convert.ToString(dataReader["channel_name"]);
-                    channelInfo.channelServerName = Convert.ToString(dataReader["channel_server_name"]);
-                    channelInfo.channelDatabaseName = Convert.ToString(dataReader["channel_database_name"]);
-                    channelInfo.channelDatabaseType = Convert.ToInt32(dataReader["channel_database_type"]);
-                    channelInfo.channelUserName = Convert.ToString(dataReader["channel_user_name"]);
-                    channelInfo.channelDatabasePassword = Convert.ToString(dataReader["channel_database_password"]);
+                    channelInfo.Id = Convert.ToString(dataReader["id"]);
+                    channelInfo.Name = Convert.ToString(dataReader["name"]);
+                    channelInfo.ServerName = Convert.ToString(dataReader["server_name"]);
+                    channelInfo.DatabaseName = Convert.ToString(dataReader["database_name"]);
+                    channelInfo.DatabaseType = Convert.ToInt32(dataReader["database_type"]);
+                    channelInfo.UserName = Convert.ToString(dataReader["username"]);
+                    channelInfo.DatabasePassword = Convert.ToString(dataReader["database_password"]);
                 }
 
                 //close Data Reader

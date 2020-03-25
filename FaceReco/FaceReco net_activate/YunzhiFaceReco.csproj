@@ -105,22 +105,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\FaceTrackUnit.cs" />
-    <Compile Include="FaceFeature.cs" />
-    <Compile Include="Muti_Channel\initUser\model\Auth.cs" />
-    <Compile Include="Muti_Channel\initUser\model\InitUserDBInfo.cs" />
-    <Compile Include="Muti_Channel\initUser\model\InitUserLogin.cs" />
-    <Compile Include="Muti_Channel\initUser\model\RegisterOperator.cs" />
-    <Compile Include="Muti_Channel\initUser\pojo\RegisterInfo.cs" />
-    <Compile Include="Muti_Channel\initUser\pojo\UserInfo.cs" />
-    <Compile Include="Muti_Channel\initUser\util\SQLServer_Connector.cs" />
-    <Compile Include="Muti_Channel\initUser\vo\RegisterInfoVO.cs" />
+    <Compile Include="TV_Create\Tabjin\FaceFeature.cs" />
+    <Compile Include="TV_Create\Muti_Channel\initUser\model\Auth.cs" />
+    <Compile Include="TV_Create\Muti_Channel\initUser\model\InitUserDBInfo.cs" />
+    <Compile Include="TV_Create\Muti_Channel\initUser\model\InitUserLogin.cs" />
+    <Compile Include="TV_Create\Muti_Channel\initUser\model\RegisterOperator.cs" />
+    <Compile Include="TV_Create\Muti_Channel\initUser\pojo\RegisterInfo.cs" />
+    <Compile Include="TV_Create\Muti_Channel\initUser\pojo\UserInfo.cs" />
+    <Compile Include="TV_Create\Muti_Channel\initUser\util\SQLServer_Connector.cs" />
+    <Compile Include="TV_Create\Muti_Channel\initUser\vo\RegisterInfoVO.cs" />
     <Compile Include="LockScreenForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LockScreenForm.Designer.cs">
       <DependentUpon>LockScreenForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Muti_Channel\TabInterface\database\IChannelUser.cs" />
+    <Compile Include="TV_Create\Muti_Channel\TabInterface\database\IChannelUser.cs" />
     <Compile Include="SDKModels\ASF_AgeInfo.cs" />
     <Compile Include="SDKModels\ASF_Face3DAngle.cs" />
     <Compile Include="SDKModels\ASF_FaceFeature.cs" />
@@ -149,19 +149,19 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SDKUtil\ASFFunctions.cs" />
-    <Compile Include="Tabjin\Config\Tab_Config.cs" />
-    <Compile Include="Tabjin\Tabjin_Utils\KeyboardHook.cs" />
-    <Compile Include="Tabjin\Tabjin_Utils\MysqlUtils.cs" />
-    <Compile Include="Tabjin\Tabjin_Utils\ProcessMng.cs" />
-    <Compile Include="Tabjin\Tabjin_Utils\SidUtils.cs" />
-    <Compile Include="Tabjin\Tabjin_Utils\TabArrayUtils.cs" />
-    <Compile Include="Tabjin\Tabjin_Utils\TabConvert.cs" />
-    <Compile Include="Tabjin\Tabjin_Utils\TabTimer.cs" />
-    <Compile Include="Users.cs" />
+    <Compile Include="TV_Create\Tabjin\Config\Tab_Config.cs" />
+    <Compile Include="TV_Create\Tabjin\Tabjin_Utils\KeyboardHook.cs" />
+    <Compile Include="TV_Create\Tabjin\Tabjin_Utils\MysqlUtils.cs" />
+    <Compile Include="TV_Create\Tabjin\Tabjin_Utils\ProcessMng.cs" />
+    <Compile Include="TV_Create\Tabjin\Tabjin_Utils\SidUtils.cs" />
+    <Compile Include="TV_Create\Tabjin\Tabjin_Utils\TabArrayUtils.cs" />
+    <Compile Include="TV_Create\Tabjin\Tabjin_Utils\TabConvert.cs" />
+    <Compile Include="TV_Create\Tabjin\Tabjin_Utils\TabTimer.cs" />
+    <Compile Include="TV_Create\Tabjin\Users.cs" />
     <Compile Include="Utils\FaceUtil.cs" />
     <Compile Include="Utils\ImageUtil.cs" />
     <Compile Include="Utils\MemoryUtil.cs" />
-    <Compile Include="Param.cs" />
+    <Compile Include="TV_Create\Tabjin\Param.cs" />
     <EmbeddedResource Include="FaceForm.resx">
       <DependentUpon>FaceForm.cs</DependentUpon>
       <SubType>Designer</SubType>

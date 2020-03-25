@@ -8,7 +8,7 @@ using YunZhiFaceReco.TV_Create.MUti_Channel.repo;
 
 namespace YunZhiFaceRecoDataManager.TV_Create.MUti_Channel.model {
     public class User {
-        public static List<UserInfo> QueryUserInfos(string _connectString) {
+        public static List<UserInfos> QueryUserInfos(string _connectString) {
             SQLServer_Connector sqlserver = new SQLServer_Connector(_connectString);
             return sqlserver.QueryUserInfos();
         }

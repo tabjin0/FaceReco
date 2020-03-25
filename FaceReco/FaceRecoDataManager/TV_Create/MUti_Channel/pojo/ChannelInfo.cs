@@ -9,18 +9,18 @@ namespace YunZhiFaceReco.TV_Create.MUti_Channel.pojo {
     /// 频道基础实体类
     /// </summary>
     public class ChannelInfo {
-        public string channelId { get; set; }
+        public string Id { get; set; }
         // 频道名
-        public string channelName { get; set; }
+        public string Name { get; set; }
         //频道数据库表名
-        public string channelDatabaseName { get; set; }
+        public string DatabaseName { get; set; }
         // 频道数据库类型
-        public int channelDatabaseType { get; set; }
+        public int DatabaseType { get; set; }
         // 频道数据库密码
-        public string channelDatabasePassword { get; set; }
+        public string DatabasePassword { get; set; }
         // 频道数据库名
-        public string channelServerName { get; set; }
+        public string ServerName { get; set; }
         // 频道数据库用户名
-        public string channelUserName { get; set; }
+        public string UserName { get; set; }
     }
 }

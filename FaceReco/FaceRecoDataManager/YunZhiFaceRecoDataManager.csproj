@@ -81,7 +81,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\AForge.Video.DirectShow.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=8.0.16.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+    <Reference Include="EntityFramework">
+      <HintPath>packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.3.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\x64\Release\MySql.Data.dll</HintPath>
     </Reference>
@@ -90,8 +96,11 @@
       <HintPath>bin\x64\Release\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -107,6 +116,8 @@
     <Compile Include="Entity\FaceTrackUnit.cs" />
     <Compile Include="FaceFeature.cs" />
     <Compile Include="TV_Create\MUti_Channel\model\User.cs" />
+    <Compile Include="TV_Create\uitls\DBData_Convert\DB2VO.cs" />
+    <Compile Include="TV_Create\uitls\DBData_Convert\DBDataHelper.cs" />
     <Compile Include="TV_Create\uitls\KeyboardHook.cs" />
     <Compile Include="TV_Create\MUti_Channel\repo\MysqlUtils.cs" />
     <Compile Include="SDKModels\ASF_AgeInfo.cs" />
@@ -142,9 +153,27 @@
     <Compile Include="TV_Create\uitls\TabConvert.cs" />
     <Compile Include="TV_Create\MUti_Channel\model\Channel.cs" />
     <Compile Include="TV_Create\MUti_Channel\pojo\ChannelInfo.cs" />
-    <Compile Include="TV_Create\MUti_Channel\pojo\UserInfo.cs" />
+    <Compile Include="TV_Create\MUti_Channel\pojo\UserInfos.cs" />
     <Compile Include="TV_Create\MUti_Channel\repo\SQLServer_Connector.cs" />
     <Compile Include="TV_Create\uitls\Users.cs" />
+    <Compile Include="UserInfo.cs">
+      <DependentUpon>UserInfoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserInfoModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserInfoModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserInfoModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserInfoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserInfoModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserInfoModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Utils\FaceUtil.cs" />
     <Compile Include="Utils\ImageUtil.cs" />
     <Compile Include="Utils\MemoryUtil.cs" />
@@ -156,6 +185,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -165,6 +195,23 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EntityDeploy Include="UserInfoModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UserInfoModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="UserInfoModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UserInfoModel.edmx</DependentUpon>
+      <LastGenOutput>UserInfoModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="UserInfoModel.edmx.diagram">
+      <DependentUpon>UserInfoModel.edmx</DependentUpon>
+    </None>
+    <None Include="UserInfoModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UserInfoModel.edmx</DependentUpon>
+      <LastGenOutput>UserInfoModel.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -205,6 +252,9 @@
     <Folder Include="Component\" />
     <Folder Include="doc\" />
     <Folder Include="TV_Create\MUti_Channel\service\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

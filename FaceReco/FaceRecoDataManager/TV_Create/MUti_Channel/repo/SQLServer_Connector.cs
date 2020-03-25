@@ -74,8 +74,8 @@ namespace YunZhiFaceReco.TV_Create.MUti_Channel.repo {
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
-        public List<UserInfo> QueryUserInfos() {
-            List<UserInfo> userInfoList = new List<UserInfo>();
+        public List<UserInfos> QueryUserInfos() {
+            List<UserInfos> userInfoList = new List<UserInfos>();
 
             //后面拼写查询语句要用到窗体的信息
             SqlConnection con = new SqlConnection(SQLServer_Connector._connectString); //创建数据库连接类的对象
@@ -89,14 +89,24 @@ namespace YunZhiFaceReco.TV_Create.MUti_Channel.repo {
             SqlDataReader dr = cmd.ExecuteReader();
 
             while (dr.Read()) {
-                UserInfo userInfo = new UserInfo();
+                UserInfos userInfo = new UserInfos();
+                userInfo.strWorkCode = Convert.ToString(dr["strWorkCode"]);
                 userInfo.strName = Convert.ToString(dr["strName"]);
+                userInfo.strPassword = Convert.ToString(dr["strPassword"]);
+                userInfo.dwOrigin = Convert.ToInt16(dr["dwOrigin"]);
+                userInfo.strMobilePhone = Convert.ToString(dr["strMobilePhone"]);
+                userInfo.strTelephone = Convert.ToString(dr["strTelephone"]);
+                userInfo.strEmailAddress = Convert.ToString(dr["strEmailAddress"]);
+                userInfo.pbIcon = Convert.ToString(dr["pbIcon"]);
+                userInfo.enumUserStatus = Convert.ToInt16(dr["enumUserStatus"]);
+                userInfo.strHint = Convert.ToString(dr["strHint"]);
                 userInfoList.Add(userInfo);
             }
 
             if (userInfoList.Count == 0) {
                 MessageBox.Show("抱歉，未查询到用户！");
             }
+            MessageBox.Show("返回数据");
             return userInfoList;
         }
 

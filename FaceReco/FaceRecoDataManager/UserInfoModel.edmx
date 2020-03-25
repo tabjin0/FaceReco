@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Net2Dynetmanage2019Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="strUserID" />
+          </Key>
+          <Property Name="strUserID" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="strWorkCode" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="strName" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="strPassword" Type="nvarchar" MaxLength="64" />
+          <Property Name="dwOrigin" Type="int" Nullable="false" />
+          <Property Name="strMobilePhone" Type="nvarchar" MaxLength="32" />
+          <Property Name="strTelephone" Type="nvarchar" MaxLength="32" />
+          <Property Name="strEmailAddress" Type="nvarchar" MaxLength="100" />
+          <Property Name="dwVerifyMode" Type="int" />
+          <Property Name="pbIcon" Type="image" />
+          <Property Name="enumUserStatus" Type="int" />
+          <Property Name="odtUpdateDate" Type="datetime" />
+          <Property Name="odtCreateDate" Type="datetime" />
+          <Property Name="strHint" Type="nvarchar" MaxLength="64" />
+          <Property Name="strAttriReserved1" Type="nvarchar" MaxLength="128" />
+          <Property Name="strAttriReserved2" Type="nvarchar" MaxLength="128" />
+          <Property Name="strAttriReserved3" Type="nvarchar" MaxLength="128" />
+          <Property Name="strAttriReserved4" Type="nvarchar" MaxLength="128" />
+          <Property Name="strAttriReserved5" Type="nvarchar" MaxLength="128" />
+          <Property Name="strAttriReserved6" Type="nvarchar" MaxLength="128" />
+          <Property Name="strAttriReserved7" Type="nvarchar" MaxLength="128" />
+          <Property Name="strAttriReserved8" Type="nvarchar" MaxLength="128" />
+          <Property Name="strAttriReserved9" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityContainer Name="Net2Dynetmanage2019ModelStoreContainer">
+          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Net2Dynetmanage2019Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="strUserID" />
+          </Key>
+          <Property Name="strUserID" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="strWorkCode" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="strName" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="strPassword" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="dwOrigin" Type="Int32" Nullable="false" />
+          <Property Name="strMobilePhone" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="strTelephone" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="strEmailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dwVerifyMode" Type="Int32" />
+          <Property Name="pbIcon" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="enumUserStatus" Type="Int32" />
+          <Property Name="odtUpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="odtCreateDate" Type="DateTime" Precision="3" />
+          <Property Name="strHint" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="strAttriReserved1" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="strAttriReserved2" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="strAttriReserved3" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="strAttriReserved4" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="strAttriReserved5" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="strAttriReserved6" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="strAttriReserved7" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="strAttriReserved8" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="strAttriReserved9" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="Net2Dynetmanage2019Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Net2Dynetmanage2019ModelStoreContainer" CdmEntityContainer="Net2Dynetmanage2019Entities">
+          <EntitySetMapping Name="UserInfo">
+            <EntityTypeMapping TypeName="Net2Dynetmanage2019Model.UserInfo">
+              <MappingFragment StoreEntitySet="UserInfo">
+                <ScalarProperty Name="strUserID" ColumnName="strUserID" />
+                <ScalarProperty Name="strWorkCode" ColumnName="strWorkCode" />
+                <ScalarProperty Name="strName" ColumnName="strName" />
+                <ScalarProperty Name="strPassword" ColumnName="strPassword" />
+                <ScalarProperty Name="dwOrigin" ColumnName="dwOrigin" />
+                <ScalarProperty Name="strMobilePhone" ColumnName="strMobilePhone" />
+                <ScalarProperty Name="strTelephone" ColumnName="strTelephone" />
+                <ScalarProperty Name="strEmailAddress" ColumnName="strEmailAddress" />
+                <ScalarProperty Name="dwVerifyMode" ColumnName="dwVerifyMode" />
+                <ScalarProperty Name="pbIcon" ColumnName="pbIcon" />
+                <ScalarProperty Name="enumUserStatus" ColumnName="enumUserStatus" />
+                <ScalarProperty Name="odtUpdateDate" ColumnName="odtUpdateDate" />
+                <ScalarProperty Name="odtCreateDate" ColumnName="odtCreateDate" />
+                <ScalarProperty Name="strHint" ColumnName="strHint" />
+                <ScalarProperty Name="strAttriReserved1" ColumnName="strAttriReserved1" />
+                <ScalarProperty Name="strAttriReserved2" ColumnName="strAttriReserved2" />
+                <ScalarProperty Name="strAttriReserved3" ColumnName="strAttriReserved3" />
+                <ScalarProperty Name="strAttriReserved4" ColumnName="strAttriReserved4" />
+                <ScalarProperty Name="strAttriReserved5" ColumnName="strAttriReserved5" />
+                <ScalarProperty Name="strAttriReserved6" ColumnName="strAttriReserved6" />
+                <ScalarProperty Name="strAttriReserved7" ColumnName="strAttriReserved7" />
+                <ScalarProperty Name="strAttriReserved8" ColumnName="strAttriReserved8" />
+                <ScalarProperty Name="strAttriReserved9" ColumnName="strAttriReserved9" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
