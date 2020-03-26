@@ -13,10 +13,13 @@ using YunZhiFaceReco.TV_Create.MUti_Channel;
 using YunZhiFaceReco.TV_Create.MUti_Channel.pojo;
 using YunZhiFaceReco.TV_Create.MUti_Channel.repo;
 using YunZhiFaceReco.Utils;
+using YunZhiFaceRecoDataManager.TV_Create.Interface;
 using YunZhiFaceRecoDataManager.TV_Create.MUti_Channel.model;
 
 namespace YunZhiFaceReco {
     public partial class FaceForm : Form {
+
+        #region 私有成员
         //引擎Handle
         private IntPtr pImageEngine = IntPtr.Zero;
 
@@ -50,13 +53,15 @@ namespace YunZhiFaceReco {
         /// </summary>
         private FilterInfoCollection filterInfoCollection;
         private VideoCaptureDevice deviceVideo;
-
         #endregion
 
         #region 频道相关
         private ChannelInfo currentChannel = null;
         #endregion
 
+        #endregion
+
+        #region FaceForm构造函数
         public FaceForm() {
             InitializeComponent();
 
@@ -69,8 +74,11 @@ namespace YunZhiFaceReco {
             txtThreshold.Enabled = false;// 阈值不可编辑状态
             getNowTimerAndWeek();// 获取当前时间和星期几
 
-            initMutiChannelComboBox();
+            this.initMutiChannelComboBox();
+
+            this.initlistviewuserinfolist();
         }
+        #endregion
 
         #region 时间
         public void getNowTimerAndWeek() {
@@ -90,8 +98,7 @@ namespace YunZhiFaceReco {
         }
         #endregion
 
-
-
+        #region 引擎
         /// <summary>
         /// 初始化引擎
         /// </summary>
@@ -179,8 +186,13 @@ namespace YunZhiFaceReco {
             combinedMask = FaceEngineMask.ASF_FACERECOGNITION | FaceEngineMask.ASF_FACE3DANGLE;
             retCode = ASFFunctions.ASFInitEngine(detectMode, detectFaceOrientPriority, detectFaceScaleVal, detectFaceMaxNum, combinedMask, ref pVideoImageEngine);
             Console.WriteLine("InitVideoEngine Result:" + retCode);
-        }
 
+            // 初始化video
+            this.initVideo();
+        }
+        #endregion
+
+        #region 识别图片
         /// <summary>
         /// “选择识别图片”按钮事件
         /// </summary>
@@ -451,7 +463,9 @@ namespace YunZhiFaceReco {
                 }
             }
         }
+        #endregion
 
+        #region 窗体
         /// <summary>
         /// 窗体关闭事件
         /// </summary>
@@ -462,9 +476,10 @@ namespace YunZhiFaceReco {
             //销毁引擎
             retCode = ASFFunctions.ASFUninitEngine(pVideoEngine);
             Console.WriteLine("UninitEngine pVideoEngine Result:" + retCode);
-
         }
+        #endregion
 
+        #region 公用方法
         /// <summary>
         /// 追加公用方法
         /// </summary>
@@ -472,7 +487,9 @@ namespace YunZhiFaceReco {
         private void AppendText(string message) {
             logBox.AppendText(message);
         }
+        #endregion
 
+        #region 人脸匹配
         /// <summary>
         /// 匹配事件
         /// </summary>
@@ -532,8 +549,92 @@ namespace YunZhiFaceReco {
             imagePathList.Clear();
         }
 
+        #endregion
+
+        #region 摄像头相关
+
+        /// <summary>
+        /// 摄像头初始化
+        /// </summary>
+        private void initVideo() {
+            filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+
+            if (filterInfoCollection.Count == 0) {
+                btnStartVideo.Enabled = false;
+            }
+            else {
+                btnStartVideo.Enabled = true;
+            }
+            // debug
+            MessageBox.Show("FaceForm，摄像头初始化: filterInfoCollection.Count = " + filterInfoCollection.Count + "，非0为正常");
 
 
+            // 摄像头加载完成之后从数据库获取整个人脸特征值库
+            /* tabjin 数据库操作 start*/
+            // 数据库中查询出feature
+            //MysqlUtils mysqlUtils = new MysqlUtils();
+            //featureListFromDB = mysqlUtils.SelectUserFaceByFeature();// 数据库查询
+            //// debug
+            //MessageBox.Show("FaceForm，摄像头初始化后加载数据库数据: featureListFromDB.Count = " + featureListFromDB.Count + "，非0为正常");
+
+            //for (int i = 0; i < featureListFromDB.Count; i++) {
+            //    // star
+            //    ASF_FaceFeature localFeature = new ASF_FaceFeature();
+            //    localFeature.feature = MemoryUtil.Malloc(featureListFromDB[i].Length);// 申请本地人脸特征指针
+            //    MemoryUtil.Copy(featureListFromDB[i], 0, localFeature.feature, featureListFromDB[i].Length);// source, startIndex, destination, length
+            //    localFeature.featureSize = featureListFromDB[i].Length;// 设置本地特征值长度
+            //    IntPtr pLocalFeature = MemoryUtil.Malloc(MemoryUtil.SizeOf<ASF_FaceFeature>());// 申请本地特征值指针空间
+            //    MemoryUtil.StructureToPtr(localFeature, pLocalFeature);// T t,IntPtr ptr
+
+            //    imagesFeatureList.Add(pLocalFeature);
+            //}
+            /* tabjin 数据库操作 end*/
+        }
+
+        /// <summary>
+        /// 摄像头按钮点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void btnStartVideo_Click(object sender, EventArgs e) {
+            //必须保证有可用摄像头
+            if (filterInfoCollection.Count == 0) {
+                MessageBox.Show("未检测到摄像头，请确保已安装摄像头或驱动!");
+            }
+            if (videoSourcePlayer.IsRunning)//  摄像头未开启状态
+            {
+                btnStartVideo.Text = "启用摄像头";
+                videoSourcePlayer.SignalToStop(); //关闭摄像头
+                chooseImgBtn.Enabled = true;
+                matchBtn.Enabled = true;
+                txtThreshold.Enabled = false;
+                videoSourcePlayer.Hide();
+            }
+            else// 摄像头开启状态
+            {
+                if (isCompare) {
+                    //比对结果清除
+                    for (int i = 0; i < imagesFeatureList.Count; i++) {
+                        imageList.Items[i].Text = string.Format("{0}号", i);
+                    }
+                    lblCompareInfo.Text = "";
+                    isCompare = false;
+                }
+
+                txtThreshold.Enabled = true;
+                videoSourcePlayer.Show();
+                chooseImgBtn.Enabled = false;
+                matchBtn.Enabled = false;
+                btnStartVideo.Text = "关闭摄像头";
+                deviceVideo = new VideoCaptureDevice(filterInfoCollection[0].MonikerString);
+                deviceVideo.VideoResolution = deviceVideo.VideoCapabilities[0];
+                videoSourcePlayer.VideoSource = deviceVideo;
+                videoSourcePlayer.Start();
+            }
+        }
+        #endregion
+
+        #region 比对结果
         private FaceTrackUnit trackUnit = new FaceTrackUnit();
         private Font font = new Font(FontFamily.GenericSerif, 10f);
         private SolidBrush brush = new SolidBrush(Color.Red);
@@ -541,6 +642,290 @@ namespace YunZhiFaceReco {
         private bool isLock = false;
 
 
+        /// <summary>
+        /// 图像显示到窗体上，得到每一帧图像，并进行处理（画框）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        //private void videoSource_Paint(object sender, PaintEventArgs e) {
+        //    // debug
+        //    this.labelVideoSourceIsRunning.Text = "labelVideoSourceIsRunning：" + videoSource.IsRunning;
+
+        //    if (videoSource.IsRunning)// 摄像头运行中
+        //    {
+        //        //得到当前摄像头下的图片
+        //        Bitmap bitmap = videoSource.GetCurrentVideoFrame();
+        //        if (bitmap == null) {
+        //            // debug
+        //            MessageBox.Show("FaceForm，摄像头运行中，没有获取到当期摄像头下的图片");
+        //            return;
+        //        }
+        //        Graphics g = e.Graphics;
+        //        float offsetX = videoSource.Width * 1f / bitmap.Width;
+        //        float offsetY = videoSource.Height * 1f / bitmap.Height;
+        //        //检测人脸，得到Rect框（方框）
+        //        ASF_MultiFaceInfo multiFaceInfo = FaceUtil.DetectFace(pVideoEngine, bitmap);
+        //        //debug
+        //        this.labelMultiFaceInfo.Text = "得到的Rect框：" + "faceRects=" + multiFaceInfo.faceRects + "，faceOrients=" + multiFaceInfo.faceOrients + "，faceNum=" + multiFaceInfo.faceNum;
+        //        //得到最大人脸
+        //        ASF_SingleFaceInfo maxFace = FaceUtil.GetMaxFace(multiFaceInfo);
+        //        //debug
+        //        this.labelMaxFace.Text = "最大人脸：" + "faceRects=" + maxFace.faceRect + "，faceOrient=" + maxFace.faceOrient;
+        //        //得到Rect
+        //        MRECT rect = maxFace.faceRect;
+        //        float x = rect.left * offsetX;
+        //        float width = rect.right * offsetX - x;
+        //        float y = rect.top * offsetY;
+        //        float height = rect.bottom * offsetY - y;
+
+        //        // debug
+        //        this.labelX.Text = "RectX:" + Convert.ToString(x);
+        //        this.labelY.Text = "RectY:" + Convert.ToString(y);
+        //        this.labelWidth.Text = "RectWidth:" + Convert.ToString(width);
+        //        this.labelHeight.Text = "RectHeight:" + Convert.ToString(height);
+
+
+        //        //根据Rect进行画框
+        //        g.DrawRectangle(pen, x, y, width, height);
+        //        // debug
+        //        // MessageBox.Show("FaceForm，摄像头运行中，g \n" + g);
+
+        //        // 调整摄像头视频框
+        //        if (rect.left.ToString() == "0") {
+        //            this.videoSource.Location = new System.Drawing.Point(this.Width - 1, this.Height - 1);
+        //        }
+        //        else {
+        //            int xVideoSource = (int)(0.5 * (this.Width - this.videoSource.Width));
+        //            int yVideoSource = (int)(0.5 * (this.Height - this.videoSource.Height));
+        //            this.videoSource.Location = new System.Drawing.Point(xVideoSource, yVideoSource);
+        //            //this.videoSource.Location = new System.Drawing.Point(0, 0);
+
+        //            Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
+        //            this.ClientSize = new System.Drawing.Size(ScreenArea.Width, ScreenArea.Height);
+        //        }
+        //        // this.logBox.AppendText(rect.left.ToString() + "\n");
+
+        //        // this.videoSource.Show();// 能画框的时候显示摄像头视频框
+
+        //        if (trackUnit.message != "" && x > 0 && y > 0) {
+        //            //将上一帧检测结果显示到页面上
+        //            g.DrawString(trackUnit.message, font, brush, x, y + 5);
+        //        }
+        //        //保证只检测一帧，防止页面卡顿以及出现其他内存被占用情况
+        //        if (isLock == false) {
+        //            isLock = true;
+        //            //异步处理提取特征值和比对，不然页面会比较卡
+        //            ThreadPool.QueueUserWorkItem(new WaitCallback(delegate {
+        //                if (rect.left != 0 && rect.right != 0 && rect.top != 0 && rect.bottom != 0) {
+        //                    try {
+        //                        if (comparedTimes == 0)// 首次比对人脸
+        //                        {
+        //                            //提取人脸特征值 TODO 这是当前摄像头下的人脸的特征值
+        //                            IntPtr videoFaceFeature = FaceUtil.ExtractFeature(pVideoImageEngine, bitmap, maxFace);
+        //                            float similarity = 0f;
+
+        //                            // 比对结果
+        //                            int result = compareFeatureFromDB(videoFaceFeature, out similarity);// 调用比对函数，比对人脸， result返回的是人脸库中的序号
+
+        //                            if (result > -1) {
+        //                                // TODO 将首次人脸库中的序号result保存至数据库表result中，数据库表主键id为机器ip，并规定时间之内不能插入新的result
+        //                                comparedResults.Add(result);
+        //                                firstComparedResult = result;
+
+        //                                // 将result写入数据库表result  
+
+        //                                // 根据本机ip获取上次入库时间，如果时间大于12小时，更新时间，更新result； 否则不予入库
+
+
+
+        //                                //将比对结果放到显示消息中，用于最新显示
+        //                                trackUnit.message = string.Format("当前匹配到 {0}号，相似度是 {1}", result, similarity);
+        //                                labelLoginUserName.Text = result.ToString();
+        //                                IntPtr imageFeatureCheck = imagesFeatureList[result];
+        //                                Console.WriteLine(result.ToString() + ":" + similarity.ToString() + "\n");
+        //                                /* tabjin */
+        //                                // 相似度不足0.8，窗口正常显示
+        //                                if (similarity < 0.8) {
+        //                                    this.Visible = true;
+        //                                    this.WindowState = FormWindowState.Normal;
+        //                                    this.button1.Enabled = false;// 禁用锁屏按钮
+        //                                    this.TopMost = true;// 识别不通过强制界面是最顶界面
+
+        //                                    //Hook.Hook_Start(); // 人脸识别不通过，屏蔽左"WIN"、右"Win" | 屏蔽Ctrl+Esc | 屏蔽Alt+f4  | 屏蔽Alt+Esc | 屏蔽Alt+Tab | 截获Ctrl+Shift+Esc | 截获Ctrl+Alt+Delete 
+        //                                    //Hook.ShieldMissionTask(1);// 人脸识别未通过状态，开启屏蔽任务管理器
+
+        //                                    // 关闭进程
+        //                                    /*
+        //                                    try
+        //                                    {
+        //                                        //可能存在进程名相同的进程
+        //                                        foreach (Process process in Process.GetProcessesByName("cmd"))
+        //                                            process.Kill();
+        //                                    }
+        //                                    catch (Exception ex)
+        //                                    {
+        //                                    }
+        //                                     * */
+        //                                }
+        //                                else// 相似度超过80，自动缩小至系统托盘
+        //                                {
+        //                                    this.Hide();
+        //                                    this.notifyIcon.Visible = true;
+        //                                    this.button1.Enabled = true;// 开启锁屏按钮
+        //                                    this.TopMost = false;// 识别通过允许界面不是最顶界面
+
+        //                                    //Hook.Hook_Clear(); // 人脸识别通过，取消屏蔽左"WIN"、右"Win" | 屏蔽Ctrl+Esc | 屏蔽Alt+f4  | 屏蔽Alt+Esc | 屏蔽Alt+Tab | 截获Ctrl+Shift+Esc | 截获Ctrl+Alt+Delete 
+        //                                    //Hook.ShieldMissionTask(0);// 人脸识别通过之后，取消屏蔽任务管理器
+
+        //                                    // 判断进程是否存在
+        //                                    Process[] ps = Process.GetProcessesByName("cmd");
+        //                                    if (ps.Length > 0)// 进程存在
+        //                                    {
+        //                                        foreach (Process p in ps)
+        //                                            continue;
+        //                                    }
+        //                                    else// 进程不存在
+        //                                    {
+        //                                        // 打开外部exe
+        //                                        ProcessStartInfo info = new ProcessStartInfo(@"C:\Windows\System32\cmd.exe");
+        //                                        //ProcessStartInfo info = new ProcessStartInfo(@"C:\DaYang\bin\D-Cube-EditU.exe");
+        //                                        info.UseShellExecute = true;
+        //                                        info.Verb = "runas";
+        //                                        Process.Start(info);
+        //                                    }
+
+        //                                    // 隔段时间打开托盘
+        //                                    Thread.Sleep(Tab_Config.CheckFaceTimeInterval);// 设置了30秒再次验证人脸 
+        //                                }
+
+        //                                // 打开托盘
+        //                                this.Visible = true;
+        //                                this.WindowState = FormWindowState.Normal;
+
+        //                                comparedTimes++;
+        //                            }/* tabjin */
+        //                            else {
+        //                                // 重置窗口消息
+        //                                trackUnit.message = "";
+        //                            }
+
+        //                        }
+        //                        else// 再次比对人脸
+        //                        {
+        //                            // 
+        //                            float similarityCompared = 0f;
+
+
+        //                            ASF_FaceFeature localResultFeature = new ASF_FaceFeature();
+        //                            localResultFeature.feature = MemoryUtil.Malloc(featureListFromDB[firstComparedResult].Length);// 申请本地人脸特征指针
+        //                            MemoryUtil.Copy(featureListFromDB[firstComparedResult], 0, localResultFeature.feature, featureListFromDB[firstComparedResult].Length);// source, startIndex, destination, length
+        //                            localResultFeature.featureSize = featureListFromDB[firstComparedResult].Length;// 设置本地特征值长度
+        //                            IntPtr pLocalResultFeature = MemoryUtil.Malloc(MemoryUtil.SizeOf<ASF_FaceFeature>());// 申请本地特征值指针空间
+        //                            MemoryUtil.StructureToPtr(localResultFeature, pLocalResultFeature);
+
+        //                            // TODO 若为30秒钱的人脸，通过；否则，提示不是当前操作人员，请离开
+        //                            // 这边直接将30秒之前的人脸和当前video中的人脸进行比对
+        //                            // 30秒之前的人俩如何获取，保留30秒之前的人脸（yes），还是新建一个记录表（no，建立人脸记录表很烦，因为不止一台机器，其实也是可以实现，万一并发怎么办）
+        //                            // 如何保存30秒之前的人脸？30秒前的人脸是抓取30秒之前摄像头的通过的人脸（no）。还是30秒之前从数据库中查到的人脸特征值（yes）
+        //                            // 所以还是根据30秒之前通过的数据库中人脸特征值与当前的video人俩进行比对
+
+        //                            // 获取30秒之前的人脸，compareFeatureFromDB中筛选出匹配到的人脸特征值，然后将特征值byte[]托管到内存
+        //                            List<IntPtr> imagesFeatureListComPared = new List<IntPtr>();// 人脸校验需要的新的list
+        //                            imagesFeatureListComPared.Capacity = 1;// 设置新的list长度为1
+
+        //                            // TODO 根据本机ip从数据库中获取人脸，插入imagesFeatureListComPared
+        //                            imagesFeatureListComPared.Add(pLocalResultFeature);// 将30秒之前与摄像头匹配的数据库中的人脸添加至新的list
+        //                            Bitmap bitmapCompared = videoSource.GetCurrentVideoFrame();// 获取当前摄像头的画面
+        //                            IntPtr videoFaceFeatureCompared = FaceUtil.ExtractFeature(pVideoImageEngine, bitmapCompared, maxFace);// 当前摄像头下的人脸的特征值
+        //                            int res = ASFFunctions.ASFFaceFeatureCompare(pImageEngine, videoFaceFeatureCompared, imagesFeatureList[firstComparedResult], ref similarityCompared);// 新的摄像头画面，30秒之前比对的数据库中的那张人脸，返回匹配到的人脸序号
+        //                            // 按预期res应该返回0
+        //                            if (res > -1) {
+        //                                //将比对结果放到显示消息中，用于最新显示
+        //                                trackUnit.message = string.Format("当期匹配到 {0}号，相似度是 {1}", res, similarityCompared);
+        //                                Console.WriteLine(res.ToString() + ":" + res.ToString() + "\n");
+        //                                /* tabjin */
+        //                                // 相似度不足0.8，窗口正常显示
+        //                                if (similarityCompared < 0.8) {
+        //                                    this.Visible = true;
+        //                                    this.WindowState = FormWindowState.Normal;
+        //                                    this.button1.Enabled = false;// 禁用锁屏按钮
+        //                                    this.TopMost = true;// 识别不通过强制界面是最顶界面
+        //                                    //MessageBox.Show("您不是当前操作用户");
+
+        //                                    //Hook.Hook_Start(); // 人脸识别不通过，屏蔽左"WIN"、右"Win" | 屏蔽Ctrl+Esc | 屏蔽Alt+f4  | 屏蔽Alt+Esc | 屏蔽Alt+Tab | 截获Ctrl+Shift+Esc | 截获Ctrl+Alt+Delete 
+        //                                    //Hook.ShieldMissionTask(1);// 人脸识别未通过状态，开启屏蔽任务管理器
+
+        //                                    /*
+        //                                    try
+        //                                    {
+        //                                        //可能存在进程名相同的进程
+        //                                        foreach (Process process in Process.GetProcessesByName("cmd"))
+        //                                            process.Kill();
+        //                                    }
+        //                                    catch (Exception ex)
+        //                                    {
+        //                                    }
+        //                                     * */
+        //                                }
+        //                                else// 相似度超过80，自动缩小至系统托盘
+        //                                {
+        //                                    //this.Hide();
+        //                                    //this.notifyIcon.Visible = true;
+
+
+        //                                    this.Hide();
+        //                                    this.notifyIcon.Visible = true;
+
+        //                                    this.button1.Enabled = true;// 开启锁屏按钮
+        //                                    this.TopMost = false;// 识别通过允许界面不是最顶界面
+        //                                    // MessageBox.Show("您是当前操作用户");
+
+        //                                    //Hook.Hook_Clear(); // 人脸识别通过，取消屏蔽左"WIN"、右"Win" | 屏蔽Ctrl+Esc | 屏蔽Alt+f4  | 屏蔽Alt+Esc | 屏蔽Alt+Tab | 截获Ctrl+Shift+Esc | 截获Ctrl+Alt+Delete 
+        //                                    //Hook.ShieldMissionTask(0);// 人脸识别通过之后，取消屏蔽任务管理器
+
+        //                                    // 判断进程是否存在
+        //                                    Process[] ps = Process.GetProcessesByName("cmd");
+        //                                    if (ps.Length > 0)// 进程存在
+        //                                    {
+        //                                        foreach (Process p in ps)
+        //                                            continue;
+        //                                    }
+        //                                    else// 进程不存在
+        //                                    {
+        //                                        // 打开外部exe
+        //                                        ProcessStartInfo info = new ProcessStartInfo(@"C:\Windows\System32\cmd.exe");
+        //                                        //ProcessStartInfo info = new ProcessStartInfo(@"C:\DaYang\bin\D-Cube-EditU.exe");
+        //                                        info.UseShellExecute = true;
+        //                                        info.Verb = "runas";
+        //                                        Process.Start(info);
+        //                                    }
+
+        //                                    // 隔段时间打开托盘
+        //                                    Thread.Sleep(Tab_Config.CheckFaceTimeInterval);// 设置了30秒再次验证人脸 
+        //                                }
+
+        //                                // 打开托盘
+        //                                this.Visible = true;
+        //                                this.WindowState = FormWindowState.Normal;
+        //                            }/* tabjin */
+        //                            else {
+        //                                // 重置窗口消息
+        //                                trackUnit.message = "";
+        //                            }
+        //                        }
+        //                    }
+        //                    catch (Exception ex) {
+        //                        Console.WriteLine(ex.Message);
+        //                    }
+        //                    finally {
+        //                        isLock = false;
+        //                    }
+        //                }
+        //                isLock = false;
+        //            }));
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// 得到feature比较结果
@@ -590,6 +975,9 @@ namespace YunZhiFaceReco {
             return result;
         }
 
+        #endregion
+
+        #region 阈值
         /// <summary>
         /// 阈值文本框键按下事件，检测输入内容是否正确，不正确不能输入
         /// </summary>
@@ -631,6 +1019,8 @@ namespace YunZhiFaceReco {
                 threshold = 0.8f;
             }
         }
+        #endregion
+
         #region 多频道信息
         private void button1_Click(object sender, EventArgs e) {
             ChannelInfo channelInfo = new ChannelInfo();
@@ -682,14 +1072,62 @@ namespace YunZhiFaceReco {
                 // 初始化sqlserver数据库连接
 
                 string _connectString = "server='" + currentChannel.ServerName + "';database='" + currentChannel.DatabaseName + "';uid='" + currentChannel.UserName + "';pwd='" + currentChannel.DatabasePassword + "'";
-                List<UserInfos> userInfoList = User.QueryUserInfos(_connectString);
+                IUser user = new UserInfo();
+                List<UserInfos> userInfoList = user.QueryUserInfos(_connectString);
                 Console.WriteLine(_connectString);
 
             }
         }
         #endregion
 
+        #region  用户信息相关
+        private void buttonSearchUser_Click(object sender, EventArgs e) {
+            // 获取用户名
+            var userName = this.textBoxSearchUserName.Text;
 
+            // 根据用户名查询用户
+        }
 
+        #region 用户列表listView
+        public void initlistviewuserinfolist() {
+            this.listViewUserList.View = View.Details;
+            this.listViewUserList.FullRowSelect = true;
+            //this.listViewUserList.SmallImageList = this.imageList1;
+
+            this.listViewUserList.Columns.Add("姓名", 100, HorizontalAlignment.Left);
+            this.listViewUserList.Columns.Add("频道", 100, HorizontalAlignment.Left);
+            this.listViewUserList.Columns.Add("电话", 100, HorizontalAlignment.Left);
+            this.listViewUserList.Columns.Add("用户状态", 100, HorizontalAlignment.Left);
+            this.listViewUserList.Columns.Add("备注", 100, HorizontalAlignment.Left);
+
+            this.listViewUserList.BeginUpdate();
+
+            for (int i = 0; i < 10; i++) {
+                ListViewItem lvi = new ListViewItem();
+                lvi.Text = "item" + i;
+                lvi.SubItems.Add("第2列,第" + i + "行");
+                lvi.SubItems.Add("第3列,第" + i + "行");
+                lvi.SubItems.Add("666");
+                lvi.SubItems.Add("这是备注");
+
+                this.listViewUserList.Items.Add(lvi);
+            }
+            this.listViewUserList.EndUpdate();  //结束数据处理，UI界面一次性绘制
+        }
+
+        private void listViewUserList_SelectedIndexChanged(object sender, EventArgs e) {
+            var selectCount = this.listViewUserList.SelectedItems.Count;
+
+            if (selectCount == 0) return;
+
+            var indexArr = this.listViewUserList.SelectedIndices;
+            Console.WriteLine();
+            var index = indexArr[0];
+            var name = this.listViewUserList.Items[index].SubItems[0].Text;
+            MessageBox.Show("你选中的的是：" + name);
+        }
+        #endregion
+
+        #endregion
     }
 }

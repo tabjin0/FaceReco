@@ -73,7 +73,11 @@ namespace YunZhiFaceReco {
 
         #region 人脸识别相关
         //Insert statement
-        public void InsertUserFaceFeature(Users users) {
+        /// <summary>
+        /// 将用户人脸特征插入数据库
+        /// </summary>
+        /// <param name="users"></param>
+        public void InsertUserFaceFeature(User users) {
             string id = users.Id;
             string name = users.Name;
             string uToken = users.Utoken;
@@ -108,6 +112,10 @@ namespace YunZhiFaceReco {
             }
         }
 
+        /// <summary>
+        /// 全部查询用户人脸特征
+        /// </summary>
+        /// <returns></returns>
         public List<byte[]> SelectUserFaceByFeature() {
             string query = "SELECT `feature` FROM `face-reco`.`face`";// 全部查询
 
@@ -144,6 +152,12 @@ namespace YunZhiFaceReco {
                 return list;
             }
         }
+
+        /// <summary>
+        /// 通过id精确查找用户
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public byte[] PriciseSelectById(string id) {
 
             string query = "SELECT * FROM `face-reco`.`face` WHERE id='" + id + "'";
@@ -186,6 +200,32 @@ namespace YunZhiFaceReco {
             else {
                 return feature;
             }
+        }
+
+        public List<User> FindUser(String name) {
+            name="张进";
+            string query = "SELECT * FROM `face-reco`.`face` WHERE name like '" + name + "'";
+
+            User user = new User();
+
+            if (this.OpenConnection() == true) {
+                MySqlCommand cmd = new MySqlCommand(query, connection);// 命令+请求
+                MySqlDataReader dataReader = cmd.ExecuteReader();// 读取数据
+                while (dataReader.Read()) {
+                    user.Id = Convert.ToString(dataReader["id"]);
+                    user.Name = Convert.ToString(dataReader["name"]);
+                    user.Utoken = Convert.ToString(dataReader["utoken"]);
+                    user.Department = Convert.ToString(dataReader["department"]);
+                    user.Feature = TabConvert.ObjectToBytes(dataReader["feature"]).Skip(27).Take(1032).ToArray();
+                    user.ChannelId = Convert.ToInt32(dataReader["channel_id"]);
+                    user.strUserID = Convert.ToString(dataReader["uid"]);
+                    user.strWorkCode = Convert.ToString(dataReader["wor_code"]);
+                    user.strPassword = Convert.ToString(dataReader["password"]);
+                    user.dwOrigin = Convert.ToInt16(dataReader["origin"]);
+                    //user.strMobilePhone = Convert.
+                }
+            }
+            return null;
         }
         #endregion
 
@@ -270,11 +310,8 @@ namespace YunZhiFaceReco {
             ChannelInfo channelInfo = new ChannelInfo();
 
             if (this.OpenConnection() == true) {
-                // 创建命令
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                // 读取数据
-                MySqlDataReader dataReader = cmd.ExecuteReader();
-
+                MySqlCommand cmd = new MySqlCommand(query, connection);// 创建命令
+                MySqlDataReader dataReader = cmd.ExecuteReader();// 读取数据
                 // 存储数据
                 while (dataReader.Read()) {
                     channelInfo.Id = Convert.ToString(dataReader["id"]);
@@ -295,5 +332,7 @@ namespace YunZhiFaceReco {
             return channelInfo;
         }
         #endregion
+
+
     }
 }

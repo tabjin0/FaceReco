@@ -103,7 +103,7 @@ namespace YunZhiFaceReco.Utils
 
 
             /******** 特征值feature存入数据库 start **********/
-            Users users = new Users();
+            User users = new User();
             users.Id = SidUtils.sid();
             users.Feature = feature;
             MysqlUtils mysqlUtils = new MysqlUtils();

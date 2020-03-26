@@ -55,6 +55,9 @@
             this.button1 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button_MutiChannelInfo_Sync = new System.Windows.Forms.Button();
+            this.textBoxSearchUserName = new System.Windows.Forms.TextBox();
+            this.listViewUserList = new System.Windows.Forms.ListView();
+            this.buttonSearchUser = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picImageCompare)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSwiper)).BeginInit();
             this.SuspendLayout();
@@ -64,9 +67,9 @@
             this.picImageCompare.BackColor = System.Drawing.Color.White;
             this.picImageCompare.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.picImageCompare.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picImageCompare.Location = new System.Drawing.Point(604, 103);
+            this.picImageCompare.Location = new System.Drawing.Point(335, 103);
             this.picImageCompare.Name = "picImageCompare";
-            this.picImageCompare.Size = new System.Drawing.Size(494, 362);
+            this.picImageCompare.Size = new System.Drawing.Size(237, 216);
             this.picImageCompare.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picImageCompare.TabIndex = 1;
             this.picImageCompare.TabStop = false;
@@ -84,9 +87,9 @@
             // 
             this.chooseMultiImgBtn.AutoSize = true;
             this.chooseMultiImgBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chooseMultiImgBtn.Location = new System.Drawing.Point(1164, 406);
+            this.chooseMultiImgBtn.Location = new System.Drawing.Point(570, 6);
             this.chooseMultiImgBtn.Name = "chooseMultiImgBtn";
-            this.chooseMultiImgBtn.Size = new System.Drawing.Size(133, 35);
+            this.chooseMultiImgBtn.Size = new System.Drawing.Size(90, 26);
             this.chooseMultiImgBtn.TabIndex = 32;
             this.chooseMultiImgBtn.Text = "注册人脸";
             this.chooseMultiImgBtn.UseVisualStyleBackColor = true;
@@ -95,18 +98,18 @@
             // logBox
             // 
             this.logBox.BackColor = System.Drawing.Color.White;
-            this.logBox.Location = new System.Drawing.Point(12, 543);
+            this.logBox.Location = new System.Drawing.Point(11, 325);
             this.logBox.Multiline = true;
             this.logBox.Name = "logBox";
             this.logBox.ReadOnly = true;
             this.logBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.logBox.Size = new System.Drawing.Size(1085, 281);
+            this.logBox.Size = new System.Drawing.Size(261, 140);
             this.logBox.TabIndex = 31;
             // 
             // chooseImgBtn
             // 
             this.chooseImgBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chooseImgBtn.Location = new System.Drawing.Point(603, 469);
+            this.chooseImgBtn.Location = new System.Drawing.Point(365, 321);
             this.chooseImgBtn.Name = "chooseImgBtn";
             this.chooseImgBtn.Size = new System.Drawing.Size(109, 26);
             this.chooseImgBtn.TabIndex = 30;
@@ -125,14 +128,14 @@
             this.imageList.LargeImageList = this.imageLists;
             this.imageList.Location = new System.Drawing.Point(12, 103);
             this.imageList.Name = "imageList";
-            this.imageList.Size = new System.Drawing.Size(1086, 424);
+            this.imageList.Size = new System.Drawing.Size(260, 216);
             this.imageList.TabIndex = 33;
             this.imageList.UseCompatibleStateImageBehavior = false;
             // 
             // matchBtn
             // 
             this.matchBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.matchBtn.Location = new System.Drawing.Point(747, 469);
+            this.matchBtn.Location = new System.Drawing.Point(498, 321);
             this.matchBtn.Name = "matchBtn";
             this.matchBtn.Size = new System.Drawing.Size(104, 26);
             this.matchBtn.TabIndex = 34;
@@ -143,9 +146,9 @@
             // btnClearFaceList
             // 
             this.btnClearFaceList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClearFaceList.Location = new System.Drawing.Point(1164, 492);
+            this.btnClearFaceList.Location = new System.Drawing.Point(570, 37);
             this.btnClearFaceList.Name = "btnClearFaceList";
-            this.btnClearFaceList.Size = new System.Drawing.Size(133, 35);
+            this.btnClearFaceList.Size = new System.Drawing.Size(90, 28);
             this.btnClearFaceList.TabIndex = 35;
             this.btnClearFaceList.Text = "清空列表";
             this.btnClearFaceList.UseVisualStyleBackColor = true;
@@ -154,7 +157,7 @@
             // lblCompareImage
             // 
             this.lblCompareImage.AutoSize = true;
-            this.lblCompareImage.Location = new System.Drawing.Point(601, 88);
+            this.lblCompareImage.Location = new System.Drawing.Point(278, 89);
             this.lblCompareImage.Name = "lblCompareImage";
             this.lblCompareImage.Size = new System.Drawing.Size(59, 12);
             this.lblCompareImage.TabIndex = 36;
@@ -172,19 +175,20 @@
             // btnStartVideo
             // 
             this.btnStartVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStartVideo.Location = new System.Drawing.Point(884, 469);
+            this.btnStartVideo.Location = new System.Drawing.Point(365, 367);
             this.btnStartVideo.Name = "btnStartVideo";
             this.btnStartVideo.Size = new System.Drawing.Size(107, 26);
             this.btnStartVideo.TabIndex = 39;
             this.btnStartVideo.Text = "启用摄像头";
             this.btnStartVideo.UseVisualStyleBackColor = true;
+            this.btnStartVideo.Click += new System.EventHandler(this.btnStartVideo_Click);
             // 
             // txtThreshold
             // 
             this.txtThreshold.BackColor = System.Drawing.SystemColors.Window;
             this.txtThreshold.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtThreshold.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtThreshold.Location = new System.Drawing.Point(1037, 469);
+            this.txtThreshold.Location = new System.Drawing.Point(542, 367);
             this.txtThreshold.Name = "txtThreshold";
             this.txtThreshold.Size = new System.Drawing.Size(60, 25);
             this.txtThreshold.TabIndex = 40;
@@ -195,7 +199,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(996, 475);
+            this.label1.Location = new System.Drawing.Point(505, 374);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 41;
@@ -219,7 +223,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Enabled = false;
             this.label2.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(310, 27);
+            this.label2.Location = new System.Drawing.Point(11, 34);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(278, 38);
@@ -228,12 +232,11 @@
             // 
             // pictureBoxSwiper
             // 
-            this.pictureBoxSwiper.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBoxSwiper.BackgroundImage")));
             this.pictureBoxSwiper.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBoxSwiper.Location = new System.Drawing.Point(-12, -38);
+            this.pictureBoxSwiper.Location = new System.Drawing.Point(11, 500);
             this.pictureBoxSwiper.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBoxSwiper.Name = "pictureBoxSwiper";
-            this.pictureBoxSwiper.Size = new System.Drawing.Size(1470, 873);
+            this.pictureBoxSwiper.Size = new System.Drawing.Size(1470, 763);
             this.pictureBoxSwiper.TabIndex = 46;
             this.pictureBoxSwiper.TabStop = false;
             // 
@@ -242,7 +245,7 @@
             this.labelLoginUserName.AutoSize = true;
             this.labelLoginUserName.BackColor = System.Drawing.Color.Transparent;
             this.labelLoginUserName.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelLoginUserName.Location = new System.Drawing.Point(1162, 180);
+            this.labelLoginUserName.Location = new System.Drawing.Point(416, 11);
             this.labelLoginUserName.Name = "labelLoginUserName";
             this.labelLoginUserName.Size = new System.Drawing.Size(52, 27);
             this.labelLoginUserName.TabIndex = 47;
@@ -253,7 +256,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(1162, 130);
+            this.label3.Location = new System.Drawing.Point(318, 11);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(92, 27);
             this.label3.TabIndex = 48;
@@ -264,7 +267,7 @@
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(1159, 240);
+            this.label4.Location = new System.Drawing.Point(318, 38);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(92, 27);
             this.label4.TabIndex = 49;
@@ -275,7 +278,7 @@
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(1162, 297);
+            this.label5.Location = new System.Drawing.Point(416, 34);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(144, 27);
             this.label5.TabIndex = 50;
@@ -283,7 +286,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(802, 27);
+            this.button1.Location = new System.Drawing.Point(686, 4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 51;
@@ -294,7 +297,7 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(621, 65);
+            this.comboBox1.Location = new System.Drawing.Point(807, 7);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 52;
@@ -302,13 +305,40 @@
             // 
             // button_MutiChannelInfo_Sync
             // 
-            this.button_MutiChannelInfo_Sync.Location = new System.Drawing.Point(621, 12);
+            this.button_MutiChannelInfo_Sync.Location = new System.Drawing.Point(686, 33);
             this.button_MutiChannelInfo_Sync.Name = "button_MutiChannelInfo_Sync";
-            this.button_MutiChannelInfo_Sync.Size = new System.Drawing.Size(145, 23);
+            this.button_MutiChannelInfo_Sync.Size = new System.Drawing.Size(105, 23);
             this.button_MutiChannelInfo_Sync.TabIndex = 53;
             this.button_MutiChannelInfo_Sync.Text = "多频道数据同步";
             this.button_MutiChannelInfo_Sync.UseVisualStyleBackColor = true;
             this.button_MutiChannelInfo_Sync.Click += new System.EventHandler(this.button_MutiChannelInfo_Sync_Click);
+            // 
+            // textBoxSearchUserName
+            // 
+            this.textBoxSearchUserName.Location = new System.Drawing.Point(633, 86);
+            this.textBoxSearchUserName.Name = "textBoxSearchUserName";
+            this.textBoxSearchUserName.Size = new System.Drawing.Size(100, 21);
+            this.textBoxSearchUserName.TabIndex = 54;
+            this.textBoxSearchUserName.Text = "用户名";
+            // 
+            // listViewUserList
+            // 
+            this.listViewUserList.Location = new System.Drawing.Point(633, 113);
+            this.listViewUserList.Name = "listViewUserList";
+            this.listViewUserList.Size = new System.Drawing.Size(308, 183);
+            this.listViewUserList.TabIndex = 55;
+            this.listViewUserList.UseCompatibleStateImageBehavior = false;
+            this.listViewUserList.SelectedIndexChanged += new System.EventHandler(this.listViewUserList_SelectedIndexChanged);
+            // 
+            // buttonSearchUser
+            // 
+            this.buttonSearchUser.Location = new System.Drawing.Point(739, 84);
+            this.buttonSearchUser.Name = "buttonSearchUser";
+            this.buttonSearchUser.Size = new System.Drawing.Size(75, 23);
+            this.buttonSearchUser.TabIndex = 56;
+            this.buttonSearchUser.Text = "搜索用户";
+            this.buttonSearchUser.UseVisualStyleBackColor = true;
+            this.buttonSearchUser.Click += new System.EventHandler(this.buttonSearchUser_Click);
             // 
             // FaceForm
             // 
@@ -318,7 +348,10 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(1441, 836);
+            this.ClientSize = new System.Drawing.Size(1104, 590);
+            this.Controls.Add(this.buttonSearchUser);
+            this.Controls.Add(this.listViewUserList);
+            this.Controls.Add(this.textBoxSearchUserName);
             this.Controls.Add(this.button_MutiChannelInfo_Sync);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button1);
@@ -359,6 +392,7 @@
 
         #endregion
 
+        private AForge.Controls.VideoSourcePlayer videoSourcePlayer;
         private System.Windows.Forms.PictureBox picImageCompare;
         private System.Windows.Forms.Label lblImageList;
         private System.Windows.Forms.Button chooseMultiImgBtn;
@@ -384,6 +418,9 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button button_MutiChannelInfo_Sync;
+        private System.Windows.Forms.TextBox textBoxSearchUserName;
+        private System.Windows.Forms.ListView listViewUserList;
+        private System.Windows.Forms.Button buttonSearchUser;
     }
 }
 
