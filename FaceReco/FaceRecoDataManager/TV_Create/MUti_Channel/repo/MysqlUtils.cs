@@ -202,16 +202,17 @@ namespace YunZhiFaceReco {
             }
         }
 
-        public List<User> FindUser(String name) {
-            name="张进";
+        public List<User> FuzzyFindUserByName(String name) {
+            name = "张进";
             string query = "SELECT * FROM `face-reco`.`face` WHERE name like '" + name + "'";
 
-            User user = new User();
+            List<User> userList = new List<User>();
 
             if (this.OpenConnection() == true) {
                 MySqlCommand cmd = new MySqlCommand(query, connection);// 命令+请求
                 MySqlDataReader dataReader = cmd.ExecuteReader();// 读取数据
                 while (dataReader.Read()) {
+                    User user = new User();
                     user.Id = Convert.ToString(dataReader["id"]);
                     user.Name = Convert.ToString(dataReader["name"]);
                     user.Utoken = Convert.ToString(dataReader["utoken"]);
@@ -219,13 +220,16 @@ namespace YunZhiFaceReco {
                     user.Feature = TabConvert.ObjectToBytes(dataReader["feature"]).Skip(27).Take(1032).ToArray();
                     user.ChannelId = Convert.ToInt32(dataReader["channel_id"]);
                     user.strUserID = Convert.ToString(dataReader["uid"]);
-                    user.strWorkCode = Convert.ToString(dataReader["wor_code"]);
+                    user.strWorkCode = Convert.ToString(dataReader["work_code"]);
                     user.strPassword = Convert.ToString(dataReader["password"]);
                     user.dwOrigin = Convert.ToInt16(dataReader["origin"]);
                     //user.strMobilePhone = Convert.
+                    userList.Add(user);
                 }
+                dataReader.Close();
+                this.CloseConnection();// 关闭连接
             }
-            return null;
+            return userList;
         }
         #endregion
 

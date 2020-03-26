@@ -8,10 +8,10 @@ using YunZhiFaceReco.TV_Create.MUti_Channel.pojo;
 
 namespace YunZhiFaceRecoDataManager.TV_Create.Interface {
     public interface IUser {
-        public List<UserInfos> QueryUserInfos(string _connectString);
+        List<UserInfos> QueryUserInfos(string _connectString);
 
-        public User PriciseFindUserById(String id);
+        //User PriciseFindUserById(String id);
 
-        public List<User> FuzzyFindUserByName(String userName);
+        List<User> FuzzyFindUserByName(String userName);
     }
 }

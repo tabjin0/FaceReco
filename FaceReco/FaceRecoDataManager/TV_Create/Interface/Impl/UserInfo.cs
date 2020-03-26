@@ -16,8 +16,9 @@ namespace YunZhiFaceRecoDataManager.TV_Create.MUti_Channel.model {
         }
 
         public List<User> FuzzyFindUserByName(String userName) {
-
-            return null;
+            // Mysql
+            MysqlUtils mysqlUtils = new MysqlUtils();
+            return mysqlUtils.FuzzyFindUserByName("张进");
         }
     }
 }

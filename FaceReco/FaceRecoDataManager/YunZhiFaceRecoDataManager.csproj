@@ -115,7 +115,9 @@
   <ItemGroup>
     <Compile Include="Entity\FaceTrackUnit.cs" />
     <Compile Include="FaceFeature.cs" />
-    <Compile Include="TV_Create\MUti_Channel\model\User.cs" />
+    <Compile Include="TV_Create\Interface\IUser.cs" />
+    <Compile Include="TV_Create\Interface\Impl\UserInfo.cs" />
+    <Compile Include="TV_Create\MUti_Channel\VO\UserInfo.cs" />
     <Compile Include="TV_Create\uitls\DBData_Convert\DB2VO.cs" />
     <Compile Include="TV_Create\uitls\DBData_Convert\DBDataHelper.cs" />
     <Compile Include="TV_Create\uitls\KeyboardHook.cs" />
@@ -155,7 +157,7 @@
     <Compile Include="TV_Create\MUti_Channel\pojo\ChannelInfo.cs" />
     <Compile Include="TV_Create\MUti_Channel\pojo\UserInfos.cs" />
     <Compile Include="TV_Create\MUti_Channel\repo\SQLServer_Connector.cs" />
-    <Compile Include="TV_Create\uitls\Users.cs" />
+    <Compile Include="TV_Create\User.cs" />
     <Compile Include="UserInfo.cs">
       <DependentUpon>UserInfoModel.tt</DependentUpon>
     </Compile>

@@ -1086,6 +1086,9 @@ namespace YunZhiFaceReco {
             var userName = this.textBoxSearchUserName.Text;
 
             // 根据用户名查询用户
+            IUser userInfo = new UserInfo();
+            var c = userInfo.FuzzyFindUserByName("张进");
+            Console.WriteLine(c);
         }
 
         #region 用户列表listView
